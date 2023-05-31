@@ -17,7 +17,7 @@ Then Start Node server with
 node index.js
 -------------------
 
-Only run the commands below if making node files from scratch.
+Only run the commands below if making node files from scratch. You should not need to do this. The command above should do it for you.
 ---------------------------------------
 
 Node Modules to install:
