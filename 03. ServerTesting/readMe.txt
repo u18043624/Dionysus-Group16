@@ -1,7 +1,33 @@
-Node server with
-node index.js
 
-Node Modules installed
--> express
--> * parser
--> cors
+Make sure you are in the correct directory when starting and installing modules.
+Which would be where the index.js is located.
+Which is inside the server folder.
+
+You want to run
+NB: this will install all the required node_modules as they are listed in package.json
+-----------------
+npm install
+----------------
+
+This should install all the required node_modules. Then you can start the server.
+
+Then Start Node server with
+
+-------------------
+node index.js
+-------------------
+
+Only run the commands below if making node files from scratch.
+---------------------------------------
+
+Node Modules to install:
+
+npm install express
+
+npm install body-parser
+
+npm install cors
+
+---------------------------------------
+
+
