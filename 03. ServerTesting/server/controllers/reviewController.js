@@ -1,9 +1,9 @@
-const reviewsModel = require('../models/reviewsModel');
+const reviewsModel = require('../models/reviewModel');
 
 /*--------------------------Gets----------------------------------*/
 
 
-const getReview = (req, res) => {
+const getAllReview = (req, res) => {
     reviewsModel.getReviews( (error, result) => {
         if (error) 
         {
@@ -31,4 +31,4 @@ const createReview = (req, res) => {
 
 /*-------------------------Exports---------------------------------------*/
 
-module.exports = { getReview, createReview};
+module.exports = { getAllReview, createReview};

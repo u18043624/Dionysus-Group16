@@ -1,13 +1,23 @@
 //look at dotnev package to hide password etc
 
-const userModel = require('../models/usersModel');
+const userModel = require('../models/userModel');
 
 /*--------------------------Gets----------------------------------*/
 
 
-const getUser = (req, res) => {
-    const id = req.params.id;
-    userModel.getUsersById(id, (error, result) => {
+const getUserByEmail = (req, res) => {
+    const email = req.params.email;
+    userModel.getUserByEmail(email, (error, result) => {
+        if (error) 
+        {
+            return res.status(500).json({ error }); //remember to sanitize
+        }
+        res.json(result);
+    });
+};
+
+const getAllUser = (req, res) => {
+    wineModel.getAllUser((error, result) => {
         if (error) 
         {
             return res.status(500).json({ error }); //remember to sanitize
@@ -34,7 +44,7 @@ const createUser = (req, res) => {
 
 /*-------------------------Exports---------------------------------------*/
 
-module.exports = { getUser, createUser};
+module.exports = { getUserByEmail, getAllUser, createUser};
 
 
 

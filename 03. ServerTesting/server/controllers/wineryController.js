@@ -1,23 +1,22 @@
-const wineriesModel = require('../models/wineriesModel');
+const wineryModel = require('../models/wineryModel');
 
 /*--------------------------Gets----------------------------------*/
 
 
-const getAllWineries = (req, res) => {
+const getAllWinery = (req, res) => {
     
-    wineriesModel.AllWineries( (error, result) => {
+    wineryModel.getAllWinery( (error, result) => {
         if (error) 
         {
             return res.status(500).json({ error }); //remember to sanitize
         }
-        res.json(result);
+        res.json(result); 
     });
 };
 
 
-
 /*-------------------------Exports---------------------------------------*/
 
-module.exports = { getAllWineries};
+module.exports = { getAllWinery};
 
 

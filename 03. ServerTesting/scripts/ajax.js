@@ -1,4 +1,5 @@
 
+/* need to check objects if same as database !!! */
 /*--------------------------Objects-------------------------------------*/
 
 //for new user
@@ -14,8 +15,113 @@ var userData = {
     password: "password" // must hash before crpyt or byrpt
 };
 
-/*--------------------------Gets----------------------------------*/
+const wine = [
+    {
+        name: "",
+        year: "",
+        region: "",
+        imageSrc: ""
+    }
+  
+];
 
+const winetype =[{
+        subType: "",
+        category: "",
+        foodPairing: "",
+}
+]
+
+const wineries = [
+    {
+        name: "",
+        verification: "",
+        image: "",
+        description: ""
+    }
+  
+];
+
+const wineLocation =[
+    {
+        address:"",
+        city: "",
+        provine:"",
+        code:"",
+        country:"",
+    }
+]
+
+const event=[
+    {
+        title:"",
+        date:"",
+        description:"",
+        location :"",
+        winery:"",
+    }
+]
+
+/*--------------------------Gets----------------------------------*/
+//All get from tables
+
+function loadAllTable(tableName) 
+{
+    let link = "http://localhost:3030/"+ tableName;
+
+    return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', link, true);
+        xhr.onload = function() {
+            if (this.status === 200) {
+                resolve(JSON.parse(this.responseText));
+            } else {
+                reject('error:', this.status);
+            }
+        };
+        xhr.onerror = function() 
+        {
+            reject('Request failed.');
+        };
+        xhr.send();
+    });
+}
+
+// window.wineList;
+// function loadAllTable(tableName) 
+// {
+
+//     let link = "http://localhost:3030/"+ tableName;
+
+//     return new Promise((resolve, reject) => {
+//         var xhr = new XMLHttpRequest();
+//         xhr.open('GET', link, true);
+//         xhr.onload = function() {
+//             if (this.status === 200) {
+//                 resolve(JSON.parse(this.responseText));
+//             } else {
+//                 reject('error:', this.status);
+//             }
+//         };
+//         xhr.onerror = function() 
+//         {
+//             reject('Request failed.');
+//         };
+//         xhr.send();
+//     });
+// }
+
+//events
+
+//wines
+
+
+
+//wineries
+
+
+
+//users
 function loadData() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://localhost:3030/users/0', true);
@@ -35,7 +141,22 @@ function loadData() {
     xhr.send();
 }
 
+//owner
+
+
+//reviews
+
+//
+
+
+
 /*-------------------------Posts---------------------------------------*/
+
+/*functions to do
+
+s
+
+*/
 
 function setData(data) {
     var xhr = new XMLHttpRequest();
@@ -48,7 +169,7 @@ function setData(data) {
         } 
         else {
             //check here adds it but throws error // maybe trying to add user more than once ? dont think so though
-            console.error('User not added \n');
+            //console.error('User not added \n');
             console.error('error: ', this.status);
         }
     };
@@ -59,3 +180,5 @@ function setData(data) {
 }
 
 setData(userData);
+
+/* -------------------Javascript page manipulation----------------------------- */

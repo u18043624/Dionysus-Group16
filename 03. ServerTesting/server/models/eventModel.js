@@ -1,4 +1,7 @@
-const dbConnect = mysql.createConnection({
+const mysql = require('mysql');
+
+const dbConnect = mysql.createConnection(
+{
   host: 'wheatley.cs.up.ac.za',
   user: 'u21434965',
   password: 'Y6F2PAJFPO2FXZ2OKT6XSIUPUGSBMWVP',
@@ -6,7 +9,7 @@ const dbConnect = mysql.createConnection({
 });
 
 
-const AllEvents = (cb) => {
+const getAllEvent = (cb) => {
     dbConnect.query('SELECT * FROM Events', (error, results) => {
       if (error) {
         return cb(error, null);
@@ -24,4 +27,4 @@ const AllEvents = (cb) => {
     });
 };
 
-  module.exports = {createEvent, AllEvents};
+  module.exports = {createEvent, getAllEvent};

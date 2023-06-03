@@ -9,7 +9,7 @@ const dbConnect = mysql.createConnection({
 
 // cb short for callback
 
-//return all the reviws data
+//return all the reviews data
 const getReviews = (cb) => {
     dbConnect.query('SELECT * FROM Reviews', (error, results) => {
       if (error) {
@@ -19,7 +19,7 @@ const getReviews = (cb) => {
     });
   };
   
-  //pass the 
+//pass the 
 const createReviews = (reviewData, cb) => {
     dbConnect.query('INSERT INTO Reviews SET ?', reviewData, (error, results) => {
         if (error) 

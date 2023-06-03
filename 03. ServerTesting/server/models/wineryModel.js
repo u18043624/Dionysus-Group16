@@ -10,8 +10,8 @@ const dbConnect = mysql.createConnection({
 
 
 
-//return all the wineries 
-const AllWineries = (cb) => {
+//return all the winery's 
+const getAllWinery = (cb) => {
     dbConnect.query('SELECT * FROM Winery', (error, results) => {
       if (error) {
         return cb(error, null);
@@ -26,4 +26,4 @@ const AllWineries = (cb) => {
 
 
 //exports function
-module.exports = {AllWineries};
+module.exports = {getAllWinery};

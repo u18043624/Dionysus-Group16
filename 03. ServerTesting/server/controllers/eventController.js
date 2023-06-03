@@ -1,11 +1,11 @@
-const eventsModel = require('../models/eventsModel');
+const eventModel = require('../models/eventModel');
 
 /*--------------------------Gets----------------------------------*/
 
 
-const getEvents = (req, res) => {
+const getAllEvent = (req, res) => {
 
-    eventsModel.AllEvents( (error, result) => {
+    eventModel.getAllEvent( (error, result) => {
         if (error) 
         {
             return res.status(500).json({ error }); //remember to sanitize
@@ -18,9 +18,9 @@ const getEvents = (req, res) => {
 /*-------------------------Posts---------------------------------------*/
 
 
-const createEvents = (req, res) => {
+const createEvent = (req, res) => {
     const userData = req.body;
-    eventsModel.createEvent(userData, (error, result) => {
+    eventModel.createEvent(userData, (error, result) => {
         if (error) 
         {
             return res.status(500).json({ error });
@@ -32,4 +32,4 @@ const createEvents = (req, res) => {
 
 /*-------------------------Exports---------------------------------------*/
 
-module.exports = { getEvents, createEvents};
+module.exports = { getAllEvent, createEvent};
