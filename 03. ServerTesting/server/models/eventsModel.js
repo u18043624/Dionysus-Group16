@@ -1,3 +1,11 @@
+const dbConnect = mysql.createConnection({
+  host: 'wheatley.cs.up.ac.za',
+  user: 'u21434965',
+  password: 'Y6F2PAJFPO2FXZ2OKT6XSIUPUGSBMWVP',
+  database: 'u21434965_dionysus'
+});
+
+
 const AllEvents = (cb) => {
     dbConnect.query('SELECT * FROM Events', (error, results) => {
       if (error) {
@@ -6,27 +14,14 @@ const AllEvents = (cb) => {
       cb(null, results);
     });
   };
-
-  const  filterEvents= (conditions, cb) => {
-    let query = 'SELECT * FROM Events WHERE ';
-    const values = [];
-  
-    conditions.forEach((condition, index) => {
-      const { columnName, operator, columnValue } = condition;
-      query += `${columnName} ${operator} ?`;
-      values.push(columnValue);
-  
-      if (index !== conditions.length - 1) {
-        query += ' AND ';
-      }
+  const createEvent = (eventData, cb) => {
+    dbConnect.query('INSERT INTO Events SET ?', eventData, (error, results) => {
+        if (error) 
+        {
+            return cb(error);
+        }
+        cb(null, results);
     });
-  
-    dbConnect.query(query, values, (error, results) => {
-      if (error) {
-        return cb(error, null);
-      }
-      cb(null, results);
-    });
-  };
+};
 
-  module.exports = {filterEvents ,AllEvents};
+  module.exports = {createEvent, AllEvents};

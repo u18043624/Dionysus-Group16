@@ -21,38 +21,9 @@ const AllWineries = (cb) => {
   };
   
   //get wineries based on the  on a cernain factor or one condition e.g search or get by id for the user and owner
-const getWineries = (columnName, columnValue, cb) => {
-    dbConnect.query(`SELECT * FROM Winery WHERE ${columnName} = ?`, [columnValue], (error, results) => {
-        if (error) {
-            return cb(error, null);
-        }
-        cb(null, results);
-    });
-};
 
-const  filterWineries= (conditions, cb) => {
-    let query = 'SELECT * FROM Winery WHERE ';
-    const values = [];
-  
-    conditions.forEach((condition, index) => {
-      const { columnName, operator, columnValue } = condition;
-      query += `${columnName} ${operator} ?`;
-      values.push(columnValue);
-  
-      if (index !== conditions.length - 1) {
-        query += ' AND ';
-      }
-    });
-  
-    dbConnect.query(query, values, (error, results) => {
-      if (error) {
-        return cb(error, null);
-      }
-      cb(null, results);
-    });
-  };
-  
+
 
 
 //exports function
-module.exports = {filterWineries ,getWineries,AllWineries};
+module.exports = {AllWineries};
