@@ -18,5 +18,3 @@ const getAllWinery = (req, res) => {
 /*-------------------------Exports---------------------------------------*/
 
 module.exports = { getAllWinery};
-
-

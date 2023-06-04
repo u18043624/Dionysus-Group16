@@ -43,24 +43,25 @@ const createUser = (userData, cb) => {
     });
 };
 
-// const createUser = (userData, cb) => {
-//     dbConnect.query('INSERT INTO user_ID, username, first_name INTO Users SET ?,?,?', userData, (error, results) => {
-//         if (error) 
-//         {
-//             return cb(error);
-//         }
-//         cb(null, results);
-//     });
-// };
+const deleteUser = (email, cb) => {
+    const sql = 'DELETE FROM Users WHERE Email = ?';
+    dbConnect.query(sql, [email], (error, results) => {
+        if (error) {
+            return cb(error);
+        }
+        cb(null, results);
+    });
+};
 
-// const updateUser = (userData, cb) => {
-//     dbConnect.query(`INSERT INTO user_ID, username, first_name INTO Users SET ?,?,?', user
-//     if (error)
-//     {
-
-//     }
-//     cb(null, results);
-// }
+const updateUser = (email, userData, cb) => {
+    const sql = `UPDATE Users SET ? WHERE Email = ?`;
+    dbConnect.query(sql, [userData, email], (error, results) => {
+        if (error) {
+            return cb(error);
+        }
+        cb(null, results);
+    });
+};
 
 //exports function
-module.exports = {getUserByEmail, getAllUser, createUser};
+module.exports = {getUserByEmail, getAllUser, createUser, updateUser, deleteUser};

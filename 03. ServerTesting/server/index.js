@@ -13,18 +13,13 @@ const eventRoutes = require('./routes/event');
 /* ----------module implementation-----------------------------------------------*/
 
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 /* ---------- user uses ---------------------------------------------------- */
 
 app.use('/users', usersRoutes);
-
-//app.get('/users/:id', usersController.getUser);
-//app.get('/users', usersController.getAllUsers);
-// app.post('/users', usersController.createUser);
-// app.put('/users/:id', usersController.updateUser);
-// app.delete('/users/:id', usersController.deleteUser);
-//app.use('/api/wines', productsRoutes);
 
 /* ---------- wine uses ---------------------------------------------------- */
 

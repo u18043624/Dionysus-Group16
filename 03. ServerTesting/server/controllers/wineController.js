@@ -13,6 +13,17 @@ const getAllWine = (req, res) => {
     });
 };
 
+const getWineByID = (req, res) => {
+    const ID = req.params.Wine_ID;
+    wineModel.getWineByID(ID, (error, result) => {
+        if (error) 
+        {
+            return res.status(500).json({ error }); //remember to sanitize
+        }
+        res.json(result);
+    });
+};
+
 /*-------------------------Posts---------------------------------------*/
 
 
@@ -30,4 +41,4 @@ const getAllWine = (req, res) => {
 
 /*-------------------------Exports---------------------------------------*/
 
-module.exports = { getAllWine}
+module.exports = { getAllWine, getWineByID}

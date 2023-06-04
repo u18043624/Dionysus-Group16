@@ -23,7 +23,17 @@ const getAllWine = (cb) => {
     });
 }
 
+const getWineByID = (ID, cb) => {
+    dbConnect.query('SELECT * FROM Wine WHERE Wine_ID = ?', [ID], (error, results) => {
+        if (error) 
+        {
+            return cb(error, null);
+        }
+        cb(null, results[0]);
+    });
+}
+
 //post
 
 //exports function
-module.exports = {getAllWine};
+module.exports = {getAllWine, getWineByID};

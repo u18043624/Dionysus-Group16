@@ -27,7 +27,7 @@ const getAllUser = (req, res) => {
 };
 
 
-/*-------------------------Posts---------------------------------------*/
+/*-------------------------Create---------------------------------------*/
 
 
 const createUser = (req, res) => {
@@ -41,51 +41,34 @@ const createUser = (req, res) => {
     });
 };
 
+/*-------------------------Updates---------------------------------------*/
+
+
+const updateUser = (req, res) => 
+{
+    let email = req.params.email;
+    let updatedUserData = req.body;
+    userModel.updateUser(email, updatedUserData, (error, result) => {
+        if (error) {
+            return res.status(500).json({ error });
+        }
+        res.json(result);
+    });
+};
+
+/*-------------------------Delete---------------------------------------*/
+
+const deleteUser = (req, res) => 
+{
+    let email = req.params.email;
+    userModel.deleteUser(email, (error, result) => {
+        if (error) {
+            return res.status(500).json({ error });
+        }
+        res.json(result);
+    });
+};
 
 /*-------------------------Exports---------------------------------------*/
 
-module.exports = { getUserByEmail, getAllUser, createUser};
-
-
-
-// module.exports = {
-//   getAllUsers: (req, res) => {
-//     connection.query('SELECT * FROM users', (error, results) => {
-//       if (error) {
-//         return res.status(500).json({ error });
-//       }
-//       res.json(results);
-//     });
-//   },
-
-//   createUser: (req, res) => {
-//     const newUser = req.body;
-//     connection.query('INSERT INTO users SET ?', newUser, (error, results) => {
-//       if (error) {
-//         return res.status(500).json({ error });
-//       }
-//       res.status(201).json({ insertedId: results.insertId });
-//     });
-//   },
-
-//   updateUser: (req, res) => {
-//     const id = req.params.id;
-//     const updatedUser = req.body;
-//     connection.query('UPDATE users SET ? WHERE id = ?', [updatedUser, id], (error, results) => {
-//       if (error) {
-//         return res.status(500).json({ error });
-//       }
-//       res.json({ message: 'User updated successfully' });
-//     });
-//   },
-
-//   deleteUser: (req, res) => {
-//     const id = req.params.id;
-//     connection.query('DELETE FROM users WHERE id = ?', [id], (error, results) => {
-//       if (error) {
-//         return res.status(500).json({ error });
-//       }
-//       res.json({ message: 'User deleted successfully' });
-//     });
-//   }
-//}
+module.exports = { getUserByEmail, getAllUser, createUser, updateUser, deleteUser };
