@@ -35,5 +35,42 @@ const getWineByID = (ID, cb) => {
 
 //post
 
+
+///////crud for the wine 
+
+const createWine = (wineData, cb) => {
+    dbConnect.query('INSERT INTO Wine SET ?', wineData, (error, results) => {
+        if (error) 
+        {
+            return cb(error);
+        }
+        cb(null, results);
+    });
+};
+
+const deleteWine = (Wine_ID, cb) => {
+    const sql = 'DELETE FROM Wine WHERE  = ?';
+    dbConnect.query(sql, [Wine_ID], (error, results) => {
+        if (error) {
+            return cb(error);
+        }
+        cb(null, results);
+    });
+};
+
+const updateWine = (Wine_ID, wineData, cb) => {
+    const sql = `UPDATE Users SET ? WHERE Email = ?`;
+    dbConnect.query(sql, [wineData, Wine_ID], (error, results) => {
+        if (error) {
+            return cb(error);
+        }
+        cb(null, results);
+    });
+};
+
+
+
+
+
 //exports function
-module.exports = {getAllWine, getWineByID};
+module.exports = {getAllWine, getWineByID , deleteWine ,updateWine ,updateWine,createWine};

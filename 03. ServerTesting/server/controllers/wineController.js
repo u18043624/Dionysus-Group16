@@ -24,21 +24,50 @@ const getWineByID = (req, res) => {
     });
 };
 
-/*-------------------------Posts---------------------------------------*/
+/*-------------------------creates---------------------------------------*/
 
 
-// const createUser = (req, res) => {
-//     const userData = req.body;
-//     userModel.createUser(userData, (error, result) => {
-//         if (error) 
-//         {
-//             return res.status(500).json({ error });
-//         }
-//         res.json(result);
-//     });
-// };
+
+const createWine = (req, res) => {
+    const wineData = req.body;
+    wineModel.createWine(wineData, (error, result) => {
+        if (error) 
+        {
+            return res.status(500).json({ error });
+        }
+        res.json(result);
+    });
+};
+
+/*-------------------------Updates---------------------------------------*/
+
+
+const updateWine = (req, res) => 
+{
+    let Wine_ID = req.params.wine;
+    let updatedWineData = req.body;
+    wineModel.updateWine( Wine_ID, updatedWineData, (error, result) => {
+        if (error) {
+            return res.status(500).json({ error });
+        }
+        res.json(result);
+    });
+};
+
+/*-------------------------Delete---------------------------------------*/
+
+const deleteWine = (req, res) => 
+{
+    let Wine_ID = req.params.email;
+    wineModel.deleteWine(Wine_ID, (error, result) => {
+        if (error) {
+            return res.status(500).json({ error });
+        }
+        res.json(result);
+    });
+};
 
 
 /*-------------------------Exports---------------------------------------*/
 
-module.exports = { getAllWine, getWineByID}
+module.exports = { getAllWine, getWineByID , createWine , updateWine , deleteWine}
