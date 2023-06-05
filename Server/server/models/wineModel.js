@@ -38,18 +38,31 @@ const getWineByID = (ID, cb) => {
 
 ///////crud for the wine 
 
-const createWine = (wineData, cb) => {
-    dbConnect.query('INSERT INTO Wine SET ?', wineData, (error, results) => {
-        if (error) 
-        {
+const createWine = (wineData, cb) => 
+{
+    // First check if the Wine ID already exists
+    dbConnect.query('SELECT * FROM Wine WHERE Wine_ID = ?', [wineData.Wine_ID], (error, results) => {
+        if (error) {
             return cb(error);
         }
-        cb(null, results);
+
+        if (results.length > 0) {
+            return cb(new Error('Wine ID already exists'));
+        } 
+
+        // If the Wine ID doesn't exist, proceed with creating the entry
+        dbConnect.query('INSERT INTO Wine SET ?', wineData, (error, results) => {
+            if (error) {
+                return cb(error);
+            }
+            cb(null, results);
+        });
     });
 };
 
+
 const deleteWine = (Wine_ID, cb) => {
-    const sql = 'DELETE FROM Wine WHERE  = ?';
+    const sql = 'DELETE FROM Wine WHERE Wine_ID = ?';
     dbConnect.query(sql, [Wine_ID], (error, results) => {
         if (error) {
             return cb(error);
@@ -59,7 +72,7 @@ const deleteWine = (Wine_ID, cb) => {
 };
 
 const updateWine = (Wine_ID, wineData, cb) => {
-    const sql = `UPDATE Users SET ? WHERE Email = ?`;
+    const sql = `UPDATE Wine SET ? WHERE Wine_ID = ?`;
     dbConnect.query(sql, [wineData, Wine_ID], (error, results) => {
         if (error) {
             return cb(error);

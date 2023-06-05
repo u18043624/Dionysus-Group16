@@ -10,17 +10,27 @@ const dbConnect = mysql.createConnection({
 // cb short for callback
 
 //return all the reviews data
-const getReviews = (cb) => {
+const getAllReview = (cb) => {
     dbConnect.query('SELECT * FROM Reviews', (error, results) => {
       if (error) {
         return cb(error, null);
       }
       cb(null, results);
     });
-  };
+};
+
+const getReviewByID = (ID, cb) => {
+  dbConnect.query('SELECT * FROM Reviews WHERE Review_ID = ?', [ID], (error, results) => {
+      if (error) 
+      {
+          return cb(error, null);
+      }
+      cb(null, results[0]);
+  });
+}
   
 //pass the 
-const createReviews = (reviewData, cb) => {
+const createReview = (reviewData, cb) => {
     dbConnect.query('INSERT INTO Reviews SET ?', reviewData, (error, results) => {
         if (error) 
         {
@@ -31,4 +41,4 @@ const createReviews = (reviewData, cb) => {
 };
 
 //exports function
-module.exports = {getReviews, createReviews};
+module.exports = {getAllReview, createReview, getReviewByID};

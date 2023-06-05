@@ -33,13 +33,22 @@ const getAllUser = (cb) => {
     });
 }
 
-const createUser = (userData, cb) => {
-    dbConnect.query('INSERT INTO Users SET ?', userData, (error, results) => {
-        if (error) 
-        {
+const createUser = (userData, cb) => 
+{
+    dbConnect.query('SELECT * FROM Users WHERE Email = ?', [userData.Email], (error, results) => {
+        if (error) {
             return cb(error);
         }
-        cb(null, results);
+
+        if (results.length > 0) {
+            return cb(new Error('Email already exists'));
+        } 
+
+        dbConnect.query('INSERT INTO Users SET ?', userData, (error, results) => {
+            if (error) {
+                return cb(error);
+            }
+        });
     });
 };
 

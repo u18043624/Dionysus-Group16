@@ -26,27 +26,26 @@ const getWineByID = (req, res) => {
 
 /*-------------------------creates---------------------------------------*/
 
-
-
 const createWine = (req, res) => {
     const wineData = req.body;
     wineModel.createWine(wineData, (error, result) => {
         if (error) 
         {
-            return res.status(500).json({ error });
+            return res.status(500).json({ error: error.message });
         }
         res.json(result);
     });
 };
+
 
 /*-------------------------Updates---------------------------------------*/
 
 
 const updateWine = (req, res) => 
 {
-    let Wine_ID = req.params.wine;
+    let Wine_ID = req.params.Wine_ID;
     let updatedWineData = req.body;
-    wineModel.updateWine( Wine_ID, updatedWineData, (error, result) => {
+    wineModel.updateWine(Wine_ID, updatedWineData, (error, result) => {
         if (error) {
             return res.status(500).json({ error });
         }
@@ -54,11 +53,13 @@ const updateWine = (req, res) =>
     });
 };
 
+
+
 /*-------------------------Delete---------------------------------------*/
 
 const deleteWine = (req, res) => 
 {
-    let Wine_ID = req.params.email;
+    let Wine_ID = req.params.Wine_ID;
     wineModel.deleteWine(Wine_ID, (error, result) => {
         if (error) {
             return res.status(500).json({ error });
