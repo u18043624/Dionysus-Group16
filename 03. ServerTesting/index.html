@@ -1,14 +1,62 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript" src="scripts/ajax.js"></script>
-        <script type="text/javascript" src="scripts/script.js"></script>
+        
     </head>
     <body>
+        <button id="createEntryButton">Create Entry</button>
+        <button id="deleteEntryButton">delete Entry</button>
+        <button id="updateEntryButton">update Entry</button>
+
         <button onclick="loadData()">GetData</button>
-        <div id="userData"></div>
+        <div id="userData"></div> 
 
         <button onclick="setData()">SetData</button>
-        <div id="setData"></div>
+        <div id="setData"></div> 
+
+        <p id="wineList"></p>
+
+        <script type="text/javascript" src="scripts/ajax.js"></script>
+        <script type="text/javascript" src="scripts/script.js"></script>
     </body>
+
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+    <link rel="Stylesheet" href = "css/signup_login.css">
+    
+<body>
+    <div id="Background">
+    <h1>Login</h1>
+
+    
+
+    <div class="container">
+        <form id="loginForm">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email"><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"><br><br>
+
+            <input class="signupbtn" type="submit" value="Login">
+        </form>
+        <br>
+        
+
+        <!-- <a href="SignupUser.html"  class="center-link"> Tourist SignUp</a>
+        <br>
+        <a href="signupOwner.html"  class="center-link"> Owner SignUp</a> -->
+    </div>
+</div>
+<script src="scripts/ajax.js"></script>
+<script src="scripts/script.js"></script>
+</body>
 </html>

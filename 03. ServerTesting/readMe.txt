@@ -17,8 +17,9 @@ Then Start Node server with
 node index.js
 -------------------
 
-**** Please remember to delete the node_modules folder before you push to GitHub ******
+Now you can open the html page
 
+**** Please remember to delete the node_modules folder before you push to GitHub ******
 
 
 Only run the commands below if making node files from scratch. You should not need to do this. The command above should do it for you.

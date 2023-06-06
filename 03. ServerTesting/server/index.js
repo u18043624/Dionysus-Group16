@@ -1,34 +1,72 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const usersRoutes = require('./routes/users');
-const usersController = require('./controllers/usersController');
 const cors = require('cors');
-//const winesRoutes = require('./routes/products');
+const path = require('path');
+
+//routes
+const usersRoutes = require('./routes/users');
+const customerRoutes = require('./routes/customer');
+const ownerRoutes = require('./routes/owner');
+const wineRoutes = require('./routes/wine');
+const wineryRoutes = require('./routes/winery');
+const reviewRoutes = require('./routes/review');
+const eventRoutes = require('./routes/event');
+
+/* ----------module implementation-----------------------------------------------*/
 
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({
+    origin: '*', //can  just to be just url of actual site
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
-/* ----------cors implementation-----------------------------------------------*/
+//Opens Login Page (front Page)
 
-app.use(cors());
+app.use(express.static(path.join(__dirname, '../../00. Website/assets')));
 
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-//     next();
-// });
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '../../00. Website/assets/login.html'));
+});
 
-/* ---------- user fetches ---------------------------------------------------- */
+/* ---------- user uses ---------------------------------------------------- */
 
 app.use('/users', usersRoutes);
-//app.get('/users/:id', usersController.getUser);
-//app.get('/users', usersController.getAllUsers);
-// app.post('/users', usersController.createUser);
-// app.put('/users/:id', usersController.updateUser);
-// app.delete('/users/:id', usersController.deleteUser);
-//app.use('/api/wines', productsRoutes);
+
+/* ---------- owner fetches ---------------------------------------------------- */
+
+app.use('/owner', ownerRoutes);
+
+/* ---------- customer fetches ---------------------------------------------------- */
+
+app.use('/customer', customerRoutes);
+
+/* ---------- wine uses ---------------------------------------------------- */
+
+app.use('/wine', wineRoutes);
+
+/* ---------- winery fetches ---------------------------------------------------- */
+
+app.use('/winery', wineryRoutes);
+
+/* ---------- review fetches ---------------------------------------------------- */
+
+app.use('/review', reviewRoutes);
+
+/* ---------- event fetches ---------------------------------------------------- */
+
+app.use('/events', eventRoutes);
 
 /* --------------------------------------------------------------------------- */
 
 const PORT = process.env.PORT || 3030;
-app.listen(PORT, () => console.log(`server running on port ${PORT} ...`));
+app.listen(PORT, async () => {
+  console.log(`server running on port ${PORT} ...`);
+
+  // Opens the url in the default browser
+  const open = await import('open');
+  open.default(`http://localhost:${PORT}`);
+});
