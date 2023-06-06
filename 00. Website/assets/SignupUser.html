@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist signup</title>
+    <link rel="Stylesheet" href = "css/signup_login.css">
+
+    <style>
+
+body {
+      font-family: "GeosansLight", sans-serif;
+    }
+        body {
+           /*  font-family: Arial, sans-serif; */
+            background-image: url('https://images.pexels.com/photos/391213/pexels-photo-391213.jpeg?auto=compress&cs=tinysrgb&w=600');
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover; 
+        }
+        
+        
+        h1 {
+            color:  #722f37;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        p {
+            text-align: center;
+            color: #555;
+        }
+        
+        .container {
+            background-color: rgba(248, 248, 255, 0.3);
+            border-radius: 10px;
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgb(98, 98, 98);
+        }
+        
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type ="date"]
+         {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+              background-color: transparent;
+        }
+        /* 
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        } */
+        
+        input[type="file"] {
+            margin-bottom: 10px;
+            background-color: transparent;
+        }
+        input[type="file"]::file-selector-button {
+            font-weight: bold;
+            
+        }
+        
+        input[type="file"]::file-selected {
+            font-weight: bold;
+        }
+                
+        
+        .signupbtn {
+            background-color: #722f37;
+            color: #fff;
+            cursor: pointer;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        
+        /* a {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #ff7f50;
+        } */
+        .center-link {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #ff7f50;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+                        </style>
+
+
+</head>
+<body>
+    <h1>Sign Up</h1>
+
+    <div class="container">
+        <form id="signupForm" method="post" >
+            <label for="username"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" required><br>
+
+            <label for="email"><b>Email</b></label>
+            <input type="email" placeholder="Enter Email" name="email" required><br>
+
+            <label for="first_name"><b>First Name</b></label>
+            <input type="text" placeholder="Enter First Name" name="first_name" required><br>
+
+            <label for="last_name"><b>Last Name</b></label>
+            <input type="text" placeholder="Enter Last Name" name="last_name" required><br>
+
+            <label for="date_of_birth"><b>Date of Birth</b></label>
+            <input type="date" placeholder="Enter Date of Birth" name="date_of_birth" required><br>
+            
+            <label for="location"> Country</label>
+            <input type="text" placeholder="Enter your province" name="province" required><br>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required><br>
+            <label for="terms">
+                <input type="checkbox" id="terms" name="terms" required>
+                I have read and agree to the terms and services   
+                 <a href="Terms_&_privacy.html" style="color:#722f37">Terms & Privacy</a>
+            </label><br><br>
+
+            <input class="signupbtn" type="submit" value="Sign Up">
+
+    
+        </form>
+    </div>
+</body>
+</html>
