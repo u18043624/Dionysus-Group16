@@ -52,21 +52,21 @@ function createTableEntryOnServer(tableName, data) {
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.onload = function() 
         {
-            if (this.status === 200) //successful
+            if (this.status === 200) 
             {
                 var newData = JSON.parse(this.responseText);
-                console.log(newData); //testing
-                resolve(newData); // Resolve the promise with the new data
+                console.log(newData); 
+                resolve(newData); 
             } 
             else 
             {
                 console.error('error:', this.status);
-                reject('Error: ' + this.status); // Reject the promise with the error status
+                reject('Error: ' + this.status); 
             }
         };
         xhr.onerror = function() {
             console.error('Request failed.');
-            reject('Request failed.'); // Reject the promise with the error message
+            reject('Request failed.'); 
         };
         xhr.send(JSON.stringify(data));
     });
@@ -191,49 +191,4 @@ function deleteTableEntryOnServer(tableName, ID)
     xhr.send();
 }
 
-/* -------------------Javascript page manipulation----------------------------- */
 
-//to do still
-//create user
-
-//create the controllers modules and routes for CRUD methods 
-//think of way to display success or failure messages on clientSide
-//ie when a delete or get ID fails
-// or when a user is successfully deleted(Admin side) or added(client and admin) or updated(client and Admin)
-//write updates for specific data object ir user, wine winery ...
-
-// need to add customer entry when user is added
-
-
-/*
-    owner
-    crud wines
-
-    user add review
-*/
-
-/*
-    Users
-    -> create //done
-        ->also add customer //done
-    -> read //done
-        -> all //done
-        -> single //done
-    -> update ?
-
-    Reviews
-    -> create ****
-    -> read //done
-        -> all //done
-        -> single //done
-
-    Wine
-    -> create//done
-    -> read //done
-        -> all //done
-        -> single //done
-    -> update ****
-    -> delete //done
-
-
-*/

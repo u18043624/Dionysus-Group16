@@ -35,6 +35,7 @@ const getAllCustomer = (cb) => {
     });
 }
 
+//deprecated
 const createCustomer = (customerData, cb) => 
 {
     dbConnect.query('INSERT INTO Customer SET ?', customerData, (error, results) => {

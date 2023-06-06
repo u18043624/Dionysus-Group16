@@ -33,21 +33,41 @@ const getAllUser = (cb) => {
     });
 }
 
-const createUser = (userData, cb) => 
-{
-    dbConnect.query('SELECT * FROM Users WHERE Email = ?', [userData.Email], (error, results) => {
-        if (error) {
-            return cb(error);
+//using transaction so that user then customer can be added asynchronous JS causes issues
+const createUser = (userData, cb) => {
+    dbConnect.beginTransaction(function(err)  
+    {
+        if (err) { 
+            return cb(err); 
         }
 
-        if (results.length > 0) {
-            return cb(new Error('Email already exists'));
-        } 
-
-        dbConnect.query('INSERT INTO Users SET ?', userData, (error, results) => {
+        dbConnect.query('INSERT INTO Users SET ?', userData, function (error, results, fields) {
             if (error) {
-                return cb(error);
+                return dbConnect.rollback(function() {
+                    cb(error);
+                });
             }
+
+            var customerData = {
+                Email: userData.Email,
+                Can_Manage: "N"
+            };
+
+            dbConnect.query('INSERT INTO Customer SET ?', customerData, function (error, results, fields) {
+                if (error) {
+                    return dbConnect.rollback(function() {
+                        cb(error);
+                    });
+                }
+                dbConnect.commit(function(err) {
+                    if (err) {
+                        return dbConnect.rollback(function() {
+                            cb(err);
+                        });
+                    }
+                    cb(null, results);
+                });
+            });
         });
     });
 };

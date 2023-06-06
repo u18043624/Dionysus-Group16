@@ -134,47 +134,47 @@
 // //     // ...
 // // };
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Function to check if username and password match
-    const checkLogin = (email, password, cb) => {
-      getById('Users', email, (user) => {
-        console.log(user.Password);
-        if (!user || user.Password !== password) {
-          return cb(false, null);
-        }
+// document.addEventListener('DOMContentLoaded', () => {
+//     // Function to check if username and password match
+//     const checkLogin = (email, password, cb) => {
+//       getById('Users', email, (user) => {
+//         console.log(user.Password);
+//         if (!user || user.Password !== password) {
+//           return cb(false, null);
+//         }
   
-        cb(true, user.Can_Manage);
-      });
-    };
+//         cb(true, user.Can_Manage);
+//       });
+//     };
   
-    // Function to handle login button click
-    const handleLogin = (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+//     // Function to handle login button click
+//     const handleLogin = (e) => {
+//       e.preventDefault();
+//       const email = document.getElementById('email').value;
+//       const password = document.getElementById('password').value;
   
-      checkLogin(email, password, (isAuthenticated, canManage) => {
-        if (isAuthenticated) {
-          if (canManage === 'N') {
-            // Redirect customer to home.html (Replace with your own implementation)
-            window.location.href = 'home.html';
-          } else if (canManage === 'Y') {
-            // Redirect owner to owners.html (Replace with your own implementation)
-            window.location.href = 'owners.html';
-          } else {
-            console.error('Invalid Can_Manage attribute');
-          }
-        } else {
-            alert('Invalid email or password');
-          console.error('Invalid email or password');
-        }
-      });
-    };
+//       checkLogin(email, password, (isAuthenticated, canManage) => {
+//         if (isAuthenticated) {
+//           if (canManage === 'N') {
+//             // Redirect customer to home.html (Replace with your own implementation)
+//             window.location.href = 'home.html';
+//           } else if (canManage === 'Y') {
+//             // Redirect owner to owners.html (Replace with your own implementation)
+//             window.location.href = 'owners.html';
+//           } else {
+//             console.error('Invalid Can_Manage attribute');
+//           }
+//         } else {
+//             alert('Invalid email or password');
+//           console.error('Invalid email or password');
+//         }
+//       });
+//     };
   
-    // Add event listener to the login form submission
-    const loginForm = document.getElementById('loginForm');
-    loginForm.addEventListener('submit', handleLogin);
-  });
+//     // Add event listener to the login form submission
+//     const loginForm = document.getElementById('loginForm');
+//     loginForm.addEventListener('submit', handleLogin);
+//   });
 
 
 
