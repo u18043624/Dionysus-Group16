@@ -1,0 +1,142 @@
+body { 
+ font-family: GeoSansLight, serif;
+}
+
+  body {
+    margin: 0;
+    padding: 0;
+     display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+  }
+
+  .mainBodyDiv {
+   width:100%
+  }
+
+  .mainSection{
+    display: flex;
+    width:100%
+}
+
+  h1 {
+    text-align: center;
+    font-family: GeoSansLight, serif;
+   /*  font-family: Georgia, 'Times New Roman', Times, serif */
+  }
+  .navbar {
+    background-color: #722F37;
+    color: white;
+    margin: 25px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+  }
+/* 
+
+.footer {
+    position: fixed;
+    flex: 1;
+    left: 0;  
+    bottom: 0;
+    
+    width: 100%; 
+
+    
+    background-color: #222222;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+ */
+
+ .footer{
+  bottom: 0;
+ /*  position: fixed; */
+  width: 100%; 
+  background-color: #222222;
+    color: white;
+    text-align: center;
+    padding: 20px;
+ }
+
+  .image-container {
+    display: flex;
+  }
+  
+  .image {
+     /* Adjust this value to add spacing between images */
+/*     height: 200px;
+    width: 200px; */
+  }
+
+img
+{
+    margin-right: 10px;
+    height: 450px;
+ /*    width: 250px; */
+}
+
+  /* Social media */
+
+  .fa
+{
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook 
+{
+    background: #3B5998;
+    color: white;
+}
+
+.fa-google 
+{
+    background: #dd4b39;
+    color: white;
+}
+
+.fa-linkedin {
+    background: #007bb5;
+    color: white;
+}
+
+.fa-instagram {
+    background: #125688;
+    color: white;
+  }
+  
+
+  
+  .background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url("blackieshoot-pH9e5w-TH-s-unsplash Landscape.jpg");
+    background-size: cover;
+    background-position: top;
+    z-index: -1;
+  }
+  
+  .content {
+    padding-top: 100vh; /* Adjust this value as per your image height */
+    background-color: white;
+  }

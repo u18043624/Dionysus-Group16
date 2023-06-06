@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dionysus Wines</title>
+
+  <style>
+
+    .wineries-heading {
+      margin: 25px;
+    }
+    .mainSection{
+        display: flex;
+    }
+    .left-section {
+      width: 18%;
+      float: left;
+      padding-left: 40px;
+    }
+    .right-section {
+      width: 60%;
+      float: right;
+      padding: 40px;
+      
+    }
+    .titleText {
+    text-align: center;
+  }
+
+
+  .centered-div {
+    justify-content: space-between;
+  }
+
+  .footer img {
+    height: 20px;
+    margin: 5px;
+  }
+  .footer p {
+    font-size: 12px;
+  }
+    .item {
+    width: 45%;
+    /* float: left; */
+    margin-bottom: 25px;
+  }
+  .item h3 {
+    margin-top: 0;
+  }
+  .item img {
+    width: 100%;
+    height: auto;
+  }
+
+  /*stylling for dynamically added wine pages*/
+  
+  .winery {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .winery-name {
+      font-weight: bold;
+    }
+
+    .winery-image {
+      max-width: 50%;
+      margin-top: 10px;
+    }
+
+    /*styling buttons*/
+
+      .btn {
+      background-color: #222222!important;
+      color: white !important;
+      border-color: #722F37 !important;
+      }
+
+      .btn:hover {
+      background-color: #722F37 !important;
+      color: white !important;
+      border-color: #722F37 !important;
+      }
+
+      .btn:active {
+      background-color: #722F37 !important;
+      color: white !important;
+      border-color: #722F37 !important;
+      }
+
+      button {
+        margin-right: 10px !important;
+      }
+
+  </style>
+
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ --><!-- jQuery -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<!-- Bootstrap JS -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+ -->
+ 
+ <link rel="stylesheet" href="wineries.css"> 
+</head>
+<body>
+  <div class ="mainBodyDiv">
+  <div class="navbar header">
+    <div>
+      <span><h2>Dionysus</h2></span>
+    </div>
+    <div>
+      <a href="#">Home</a>
+      <a href="#">Wines</a>
+      <a href="#">Wineries</a>
+      <a href="#">About</a>
+    </div>
+  </div>
+
+  <div class="wineries-heading">
+    <h1 class="titleText">Wines</h1>
+  </div>
+
+<!-- <div class="mainSection centered-div">
+  <div class="left-section">
+    <h2>Province</h2>
+    
+  </div> -->
+
+  <div class="left-section">
+
+
+    <h2>Sort </h2>
+    <!--now comes the frop down menu with the values to the left-->
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h4>Sort By:</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sortBy" id="nameRadio" value="Name" checked>
+            <label class="form-check-label" for="nameRadio">
+              Name
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sortBy" id="wineryRadio" value="Winery">
+            <label class="form-check-label" for="wineryRadio">
+              Winery
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sortBy" id="yearRadio" value="Year">
+            <label class="form-check-label" for="yearRadio">
+              Year
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sortBy" id="priceRadio" value="Price">
+            <label class="form-check-label" for="priceRadio">
+              Price
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sortBy" id="qualityRadio" value="Quality">
+            <label class="form-check-label" for="qualityRadio">
+              Quality
+            </label>
+          </div>
+        </div>
+
+
+        <div class="col">
+          <h4>Sort Order:</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sortOrder" id="ascendingRadio" value="asc" checked>
+            <label class="form-check-label" for="ascendingRadio">
+              Ascending
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sortOrder" id="descendingRadio" value="desc">
+            <label class="form-check-label" for="descendingRadio">
+              Descending
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <button id="sortButton" class="btn btn-primary" type="button">Sort Data</button>
+        </div>
+      </div>
+    </div>
+
+
+
+<!--........................................................................................................-->
+<!--                                     DEFINE THE REVIEW MODAL                                         .-->
+<!--........................................................................................................-->
+
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal" id="open-modal-button">
+  Leave a Review
+</button> -->
+
+  <!-- Review Modal -->
+  <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reviewModalLabel">Leave a Review</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <!--  <span aria-hidden="true">&times;</span> -->
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="reviewForm">
+            <div class="form-group">
+              <label for="Wine_ID" id="labelWineID">Wine ID</label> <br>
+
+              <label for="email">Email</label>
+
+              <input type="text" class="form-control" id="reviewEmail" required>
+            </div>
+
+            <div class="form-group">
+              <label for="rating">Rating</label>
+              <select class="form-control" id="ratingReview" required>
+                <option value="">Select a rating</option>
+                <option value="5">5 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="2">2 Stars</option>
+                <option value="1">1 Star</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="review">Review</label>
+              <textarea class="form-control" id="reviewTextArea" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btnSubmitReview">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--........................................................................................................-->
+<!--                                   END OF DEFINNG REVIEW MODAL                                         .-->
+<!--........................................................................................................-->
+
+<!--........................................................................................................-->
+<!--                                   ALL REVIEWS MODAL                                         .-->
+<!--........................................................................................................-->
+<!-- Button to trigger the modal -->
+<!-- <button class="btn btn-primary all-review-button" data-toggle="modal" data-target="#allReviewsModalFinal" name="wineID1">Open Reviews</button>
+ -->
+<!-- Modal -->
+<div class="modal fade" id="allReviewsModalFinal" tabindex="-1" role="dialog" aria-labelledby="allReviewsModalFinalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="allReviewsModalFinalLabel">All Reviews for Wine</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Review content will be dynamically inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--........................................................................................................-->
+<!--                                   END OF  ALL REVIEWS MODAL                                         .-->
+<!--........................................................................................................-->
+
+
+    <!-- SEARCHING-->
+    <br><br>
+    <h2>Search </h2>
+    <div class="row mt-3 rowSearchObjects">
+      <div class="col colSearchObjects">
+   <!--  <label for="searchText">Search:</label> -->
+<input type="text" id="searchText" placeholder="Search In">
+<h4>Search In: </h4>
+<br>
+
+<label for="attribute">Search In:</label><br>
+
+
+<input type="radio" id="nameRadio" name="attribute" value="Name">
+<label for="nameRadio">Name</label><br>
+
+
+<input type="radio" id="wineryRadio" name="attribute" value="Winery">
+<label for="wineryRadio">Winery</label><br>
+
+
+<input type="radio" id="descriptionRadio" name="attribute" value="Description">
+<label for="descriptionRadio">Description</label><br>
+
+
+<input type="radio" id="regionRadio" name="attribute" value="Region">
+<label for="regionRadio">Region</label><br>
+
+
+<input type="radio" id="subtypeRadio" name="attribute" value="Subtype">
+<label for="subtypeRadio">Subtype</label><br>
+
+
+<input type="radio" id="categoryRadio" name="attribute" value="Category">
+<label for="categoryRadio">Category</label><br>
+
+
+
+<input type="radio" id="pairingRadio" name="attribute" value="Pairing">
+<label for="pairingRadio">Pairing</label><br>
+<br>
+
+<button id="searchButton" class="btn btn-primary" >Search</button>
+
+      </div><!-- END  : rowSearchObjects-->
+    </div><!--class="col colSearchObjects"END  : rowSearchObjects-->
+    
+  </div> <!--end of div LEFT section-->
+
+
+  <div class="right-section">
+
+
+    <div id="wineDiv" style="width:100%">
+    
+    </div>
+
+
+  <div class="image-container">
+  </div>
+
+
+</div><!-- end of right section div-->
+</div>
+ 
+
+<div class="divBottom">
+  <div class="footer">
+    <p>CONNECT WITH US</p>
+    <a href="#" class="fa fa-linkedin"></a>
+    <a href="#" class="fa fa-google"></a>
+    <a href="#" class="fa fa-facebook"></a>
+    <a href="#" class="fa fa-instagram"></a>
+    <a href="#" class="fa fa-twitter"></a>
+    <a href="#" class="fa fa-pinterest"></a>
+    <br>
+    <p>Dionysus @2023</p>
+  </div>
+</div>
+ <!--end of divBottom-->
+<script>
+window.onload = function() {//start of onload function *********************************************************************
+var allWines;
+var allReviews;
+var readyForLoading = 0;
+
+
+
+tableName = "Wine";
+tableNameReviews = "Review";
+
+
+getAllTable(tableName)
+  .then(AllTableValues => {
+      if (AllTableValues && AllTableValues.length > 0 && 'Wine_ID' in AllTableValues[0]) {
+        //meaning that we have fetched the data
+        
+         allWines = AllTableValues;
+        console.log("allWines has been assigned",allWines);
+        readyForLoading++;
+         // startAllLoading();
+
+
+        //then use the 
+
+
+
+
+
+         // createTable(); // Call createTable function here to populate the table with fetched data
+      } else {
+          console.log('Data not in expected format');
+      }
+  })
+  .catch(error => {
+      console.error(error);
+  });
+
+
+ //........................................................................................................
+//                                  start of startAllLoading function                                             
+//........................................................................................................
+
+
+
+
+
+getAllTable(tableNameReviews)
+  .then(AllTableValues => {
+      if (AllTableValues && AllTableValues.length > 0 && 'Review_ID' in AllTableValues[0]) {
+        //meaning that we have fetched the data
+        allReviews = AllTableValues;
+        console.log("allReviews has been assigned",allReviews);
+         // startAllLoading();
+          readyForLoading++;
+
+          // Assign the fetched data to tableValuesSecond
+         // createTable(); // Call createTable function here to populate the table with fetched data
+      } else {
+          console.log('Data not in expected format');
+      }
+  })
+  .catch(error => {
+      console.error(error);
+  });
+
+
+
+
+  let intervalId = setInterval(() => {
+
+  if (readyForLoading == 2) {
+    clearInterval(intervalId);
+    console.log('READYYYYYYYYYY FOR LOADING');
+    startAllLoading();
+    // Perform further actions with the defined allWines variable
+  }
+}, 1000);
+
+
+function startAllLoading() {
+
+
+
+
+
+/* 
+  getAllTable(tableNameReviews)
+  .then(AllTableValues => {
+      if (AllTableValues && AllTableValues.length > 0 && 'Wine_ID' in AllTableValues[0]) {
+        //meaning that we have fetched the data
+        allReviews = AllTableValues;
+        console.log("allReviews has been assigned",allReviews);
+          startAllLoading();
+
+          // Assign the fetched data to tableValuesSecond
+         // createTable(); // Call createTable function here to populate the table with fetched data
+      } else {
+          console.log('Data not in expected format');
+      }
+  })
+  .catch(error => {
+      console.error(error);
+  });
+ */
+  //............................................................
+  //FILTERING ACCORDING TO THE VALUES CHANGED IN THE DROP DOWN
+  //............................................................
+  var allWinesDummyData = [
+  {
+    "Wine_ID": "1",
+    "Name": "Chardonnay",
+    "Winery": "Winery A",
+    "Description": "A classic white wine with rich flavors.",
+    "Year": 2019,
+    "Region": "California",
+    "Price": 25.99,
+    "Image": "https://images.pexels.com/photos/774455/pexels-photo-774455.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 9,
+    "Subtype": "Dry",
+    "Category": "White",
+    "Pairing": "Seafood"
+  },
+  {
+    "Wine_ID": "2",
+    "Name": "Cabernet Sauvignon",
+    "Winery": "Winery B",
+    "Description": "A bold red wine with intense flavors.",
+    "Year": 2016,
+    "Region": "Napa Valley",
+    "Price": 39.99,
+    "Image": "https://images.pexels.com/photos/15780335/pexels-photo-15780335/free-photo-of-wine-in-glass-in-woman-hand.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 8,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Steak"
+  },
+  {
+    "Wine_ID": "3",
+    "Name": "Riesling",
+    "Winery": "Winery C",
+    "Description": "A sweet white wine with fruity notes.",
+    "Year": 2020,
+    "Region": "Mosel",
+    "Price": 16.99,
+    "Image": "https://images.pexels.com/photos/15567450/pexels-photo-15567450/free-photo-of-mirror-baguette-wine-and-strawberries-picnic.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Sweet",
+    "Category": "White",
+    "Pairing": "Spicy cuisine"
+  },
+  {
+    "Wine_ID": "4",
+    "Name": "Pinot Noir",
+    "Winery": "Winery D",
+    "Description": "A delicate red wine with subtle flavors.",
+    "Year": 2018,
+    "Region": "Burgundy",
+    "Price": 29.99,
+    "Image": "https://images.pexels.com/photos/7282899/pexels-photo-7282899.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 8,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Salmon"
+  },
+  {
+    "Wine_ID": "5",
+    "Name": "Sauvignon Blanc",
+    "Winery": "Winery E",
+    "Description": "A refreshing white wine with citrus notes.",
+    "Year": 2021,
+    "Region": "Marlborough",
+    "Price": 18.99,
+    "Image": "https://images.pexels.com/photos/9397580/pexels-photo-9397580.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Dry",
+    "Category": "White",
+    "Pairing": "Goat cheese"
+  },
+  {
+    "Wine_ID": "6",
+    "Name": "Malbec",
+    "Winery": "Winery F",
+    "Description": "A robust red wine with dark fruit flavors.",
+    "Year": 2017,
+    "Region": "Mendoza",
+    "Price": 24.99,
+    "Image": "https://images.pexels.com/photos/12176250/pexels-photo-12176250.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 8,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Grilled meats"
+  },
+  {
+    "Wine_ID": "7",
+    "Name": "Gewürztraminer",
+    "Winery": "Winery G",
+    "Description": "A fragrant white wine with floral aromas.",
+    "Year": 2020,
+    "Region": "Alsace",
+    "Price": 21.99,
+    "Image": "https://images.pexels.com/photos/10045952/pexels-photo-10045952.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Off-dry",
+    "Category": "White",
+    "Pairing": "Asian cuisine"
+  },
+  {
+    "Wine_ID": "8",
+    "Name": "Merlot",
+    "Winery": "Winery H",
+    "Description": "A smooth red wine with velvety tannins.",
+    "Year": 2018,
+    "Region": "Bordeaux",
+    "Price": 27.99,
+    "Image": "https://images.pexels.com/photos/11736166/pexels-photo-11736166.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 8,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Lamb"
+  },
+  {
+    "Wine_ID": "9",
+    "Name": "Champagne",
+    "Winery": "Winery I",
+    "Description": "A sparkling wine with crisp acidity.",
+    "Year": 2015,
+    "Region": "Champagne",
+    "Price": 39.99,
+    "Image": "https://images.pexels.com/photos/9397571/pexels-photo-9397571.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 9,
+    "Subtype": "Dry",
+    "Category": "Sparkling",
+    "Pairing": "Oysters"
+  },
+  {
+    "Wine_ID": "10",
+    "Name": "Zinfandel",
+    "Winery": "Winery J",
+    "Description": "A bold and fruity red wine with hints of spice.",
+    "Year": 2017,
+    "Region": "California",
+    "Price": 23.99,
+    "Image": "https://images.pexels.com/photos/7670333/pexels-photo-7670333.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Barbecue"
+  },
+  {
+    "Wine_ID": "11",
+    "Name": "Viognier",
+    "Winery": "Winery K",
+    "Description": "An aromatic white wine with apricot and floral notes.",
+    "Year": 2019,
+    "Region": "Rhône Valley",
+    "Price": 20.99,
+    "Image": "https://images.pexels.com/photos/1479706/pexels-photo-1479706.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Dry",
+    "Category": "White",
+    "Pairing": "Thai cuisine"
+  },
+  {
+    "Wine_ID": "12",
+    "Name": "Shiraz",
+    "Winery": "Winery L",
+    "Description": "A full-bodied red wine with dark fruit and peppery flavors.",
+    "Year": 2016,
+    "Region": "Barossa Valley",
+    "Price": 28.99,
+    "Image": "https://images.pexels.com/photos/16933511/pexels-photo-16933511/free-photo-of-bottle-of-wine-on-table.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 8,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Grilled steak"
+  },
+  {
+    "Wine_ID": "13",
+    "Name": "Chenin Blanc",
+    "Winery": "Winery M",
+    "Description": "A versatile white wine with notes of honey and stone fruit.",
+    "Year": 2020,
+    "Region": "Loire Valley",
+    "Price": 17.99,
+    "Image": "https://images.pexels.com/photos/16854496/pexels-photo-16854496/free-photo-of-woman-holding-glass-of-wine.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Dry",
+    "Category": "White",
+    "Pairing": "Roast chicken"
+  },
+  {
+    "Wine_ID": "14",
+    "Name": "Barolo",
+    "Winery": "Winery N",
+    "Description": "A prestigious red wine with complex flavors and firm tannins.",
+    "Year": 2014,
+    "Region": "Piedmont",
+    "Price": 59.99,
+    "Image": "https://images.pexels.com/photos/15846879/pexels-photo-15846879/free-photo-of-grapes-and-a-glass-of-red-wine.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 9,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Truffle dishes"
+  },
+  {
+    "Wine_ID": "15",
+    "Name": "Grenache",
+    "Winery": "Winery O",
+    "Description": "A medium-bodied red wine with red berry and spice notes.",
+    "Year": 2017,
+    "Region": "Rhone Valley",
+    "Price": 22.99,
+    "Image": "https://images.pexels.com/photos/15786533/pexels-photo-15786533/free-photo-of-wine-cellar-filled-with-bottles-of-red-wine.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Mediterranean cuisine"
+  }
+
+];//end of wineries array
+
+    // allWines = allWinesDummyData;
+    //now load all the data into 
+
+    // Assuming the `allWines` object is defined
+
+
+//now define allReviews object
+allReviewsDummyData = [
+{
+        "Review_ID": 1,
+        "Email": "example1@example.com",
+        "Date": "2023-06-04",
+        "Description": "This is a review.",
+        "Rating": 4,
+        "Wine": 5
+    },
+    {
+        "Review_ID": 2,
+        "Email": "example2@example.com",
+        "Date": "2023-06-04",
+        "Description": "This is another review.",
+        "Rating": 3,
+        "Wine": 10
+    },
+    {
+        "Review_ID": 3,
+        "Email": "example3@example.com",
+        "Date": "2023-06-04",
+        "Description": "This is yet another review.",
+        "Rating": 5,
+        "Wine": 1
+    },
+    {
+        "Review_ID": 4,
+        "Email": "example4@example.com",
+        "Date": "2023-06-04",
+        "Description": "This is a fourth review.",
+        "Rating": 2,
+        "Wine": 7
+    },
+    {
+      "Review_ID": 5,
+      "Email": "user1@example.com",
+      "Date": "2022-05-10",
+      "Description": "This wine is fantastic!",
+      "Rating": 5,
+      "Wine": 10
+    },
+    {
+    "Review_ID": 6,
+    "Email": "user2@example.com",
+    "Date": "2022-07-15",
+    "Description": "Great flavor and aroma.",
+    "Rating": 4,
+    "Wine": 5
+  },
+  {
+    "Review_ID": 7,
+    "Email": "user3@example.com",
+    "Date": "2022-09-20",
+    "Description": "Smooth and elegant.",
+    "Rating": 4,
+    "Wine": 3
+  },
+  {
+    "Review_ID": 8,
+    "Email": "user4@example.com",
+    "Date": "2022-11-05",
+    "Description": "Impressive taste!",
+    "Rating": 4,
+    "Wine": 1
+  },
+  {
+    "Review_ID": 9,
+    "Email": "user5@example.com",
+    "Date": "2022-12-15",
+    "Description": "Delightful and well-balanced.",
+    "Rating": 4.5,
+    "Wine": 8
+  },
+  {
+    "Review_ID": 10,
+    "Email": "user6@example.com",
+    "Date": "2023-01-20",
+    "Description": "Exquisite wine with a rich aroma.",
+    "Rating": 5,
+    "Wine": 7
+  },
+  {
+    "Review_ID": 11,
+    "Email": "user7@example.com",
+    "Date": "2023-02-10",
+    "Description": "A perfect wine for special occasions.",
+    "Rating": 4.5,
+    "Wine": 2
+  },
+  {
+    "Review_ID": 12,
+    "Email": "user8@example.com",
+    "Date": "2023-03-05",
+    "Description": "Bold and full-bodied red wine.",
+    "Rating": 4,
+    "Wine": 9
+  },
+  {
+    "Review_ID": 13,
+    "Email": "user9@example.com",
+    "Date": "2023-04-15",
+    "Description": "Smooth and velvety texture.",
+    "Rating": 4.5,
+    "Wine": 6
+  },
+  {
+    "Review_ID": 15,
+    "Email": "user10@example.com",
+    "Date": "2023-06-01",
+    "Description": "Aromatic and refreshing white wine.",
+    "Rating": 4,
+    "Wine": 11
+  }
+
+
+];
+
+//allReviews = allReviewsDummyData;
+
+
+
+
+function loadWinesSpecific(jsonArrayWines) {
+
+ // const container = document.querySelector('.wineDiv');
+ const container = document.getElementById('wineDiv');
+ //first make the whole duv contain nothing
+ container.innerHTML="";
+
+  jsonArrayWines.forEach(wine => {
+  const wineDiv = document.createElement('div');
+  wineDiv.innerHTML="";
+  wineDiv.classList.add('wine');
+
+  const wineIdLabel = document.createElement('label');
+  wineIdLabel.classList.add('wine-id');
+  wineIdLabel.innerText = wine.Wine_ID;
+  wineIdLabel.style.display = 'none';
+  wineDiv.appendChild(wineIdLabel);
+
+  const name = document.createElement('h4');
+  name.innerText = wine.Name;
+  wineDiv.appendChild(name);
+
+  const image = document.createElement('img');
+  image.src = wine.Image;
+ // image.style.width = '40%';
+  image.style.height = '350px';
+  wineDiv.appendChild(image);
+
+  const winery = document.createElement('p');
+  winery.innerText = wine.Winery;
+  wineDiv.appendChild(winery);
+
+  const description = document.createElement('p');
+  description.innerText = wine.Description;
+  wineDiv.appendChild(description);
+
+  const attributes = ['Year', 'Region', 'Price', 'Quality', 'Subtype', 'Category', 'Pairing'];
+
+  attributes.forEach(attr => {
+    const label = document.createElement('label');
+    label.innerText = attr + ': ';
+    wineDiv.appendChild(label);
+
+    const value = document.createElement('span');
+    value.innerText = wine[attr];
+    wineDiv.appendChild(value);
+
+    const br = document.createElement('br');
+    wineDiv.appendChild(br);
+  });
+
+
+  const reviewButton = document.createElement('button');
+  reviewButton.classList.add('btn', 'btn-primary', 'review-button');
+  reviewButton.setAttribute('type', 'button');
+  reviewButton.setAttribute('data-toggle', 'modal');
+  reviewButton.setAttribute('data-target', '#reviewModal');
+  reviewButton.setAttribute('name', wine.Wine_ID);
+      console.log("reviewButton Button Name : " , reviewButton.name);
+  //type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal"
+  // type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal"
+  reviewButton.innerText = 'Review';
+
+  wineDiv.appendChild(reviewButton);
+
+
+
+
+  const showAllReviewsButton = document.createElement('button');
+ // showAllReviewsButton.classList.add('btn', 'btn-primary', 'review-button');
+  showAllReviewsButton.classList.add('btn', 'btn-primary', 'all-review-button');
+  showAllReviewsButton.setAttribute('type', 'button');
+  showAllReviewsButton.setAttribute('data-toggle', 'modal');
+  showAllReviewsButton.setAttribute('data-target', '#allReviewsModalFinal');
+  showAllReviewsButton.setAttribute('name', wine.Wine_ID);
+   console.log("showAllReviews Button Name : " , showAllReviewsButton.name);
+ // showAllReviewsButton.setAttribute('name', wine.Wine_ID);
+  //type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal"
+  // type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal"
+  showAllReviewsButton.innerText = 'All Reviews';
+
+  wineDiv.appendChild(showAllReviewsButton);
+
+
+//................................................................................................
+// CODE TO ADD MODAL DYNAMICALLY AND DISPLAY ALL REVIEWS WHEN THE ALL REVIEWS BUTTON IS CLICKED
+//................................................................................................
+/* 
+
+// Create the dynamically generated button
+const button = document.createElement('button');
+button.textContent = 'Open Reviews';
+button.setAttribute('data-toggle', 'modal');
+button.setAttribute('data-target', '#allReviewsModal');
+//button.setAttribute('name', Review_ID);
+button.setAttribute('name', wine.Wine_ID);
+
+// Add event listener to the button
+button.addEventListener('click', function() {
+  const reviewID = this.getAttribute('name'); // Get the Review_ID from the clicked button
+
+  // Retrieve all reviews from the allReviews object
+  //const reviews = allReviews.filter(review => review.Review_ID === reviewID);//well reviewID is actually the wineID
+  const reviews = allReviews.filter(review => review.Wine == reviewID);//well reviewID is actually the wineID
+  console.log("All Reviews for wine with ID" , reviewID, reviews);
+  // Clear previous reviews in the modal body
+  const modalBody = document.querySelector('.modal-body');
+  modalBody.innerHTML = '';
+
+  // Iterate over the reviews and create text elements
+  reviews.forEach(review => {
+    //const reviewText = document.createElement('p');
+    const reviewText = document.createElement('b');
+    reviewText.textContent = `${review.Date} - ${review.Email}`;
+    
+    const ratingText = document.createElement('span');
+    ratingText.textContent = ` ${review.Rating}/5`;
+
+    const descriptionText = document.createElement('p');
+    descriptionText.textContent = review.Description;
+
+    const breakTag =  document.createElement('br');
+    reviewText.appendChild(breakTag);
+
+    
+    reviewText.appendChild(ratingText);
+    modalBody.appendChild(reviewText);
+    modalBody.appendChild(descriptionText);
+  });
+});//end of even listener
+
+// Append the button to the document
+const buttonContainer = document.querySelector('#wineDiv');
+buttonContainer.appendChild(button);
+
+
+
+
+// Define the modal
+const modal = document.createElement('div');
+modal.classList.add('modal');
+modal.setAttribute('id', 'allReviewsModal');
+
+const modalDialog = document.createElement('div');
+modalDialog.classList.add('modal-dialog');
+
+const modalContent = document.createElement('div');
+modalContent.classList.add('modal-content');
+
+const modalHeader = document.createElement('div');
+modalHeader.classList.add('modal-header');
+modalHeader.innerHTML = `
+  <h5 class="modal-title">All Reviews</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">x</span>
+  </button>
+`;
+const modalBody = document.createElement('div');
+modalBody.classList.add('modal-body');
+
+const modalFooter = document.createElement('div');
+modalFooter.classList.add('modal-footer');
+modalFooter.innerHTML = `
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+`;
+
+modalContent.appendChild(modalHeader);
+modalContent.appendChild(modalBody);
+modalContent.appendChild(modalFooter);
+modalDialog.appendChild(modalContent);
+modal.appendChild(modalDialog);
+
+// Append the modal to the document
+const modalContainer = document.querySelector('#wineDiv');
+modalContainer.appendChild(modal);
+
+
+
+ */
+//................................................................................................
+// CODE TO ADD MODAL DYNAMICALLY AND DISPLAY ALL REVIEWS WHEN THE ALL REVIEWS BUTTON IS CLICKED
+//................................................................................................
+
+
+//finally addd the whole div
+  container.appendChild(wineDiv);
+  //console.log();
+});
+
+}//end of loadwinesspecific function
+
+loadWinesSpecific(allWines);
+
+
+//then add event listeners to add wines to 
+
+
+
+/* 
+nameRadio
+wineryRadio
+yearRadio
+priceRadio
+qualityRadio
+
+ */
+
+
+//................................................................................................
+//                                  SORTING
+//................................................................................................
+
+ const sortButton = document.getElementById('sortButton');
+sortButton.addEventListener('click', handleSortButtonClick);
+
+function handleSortButtonClick() {
+  // Get the selected sort by attribute
+  const sortBy = getSelectedRadioValue('nameRadio', 'wineryRadio', 'yearRadio', 'priceRadio', 'qualityRadio');
+
+  // Get the selected sort order
+  const sortOrder = getSelectedRadioValue('ascendingRadio', 'descendingRadio');
+
+  // Sort the allWines array based on the selected attributes
+  console.log("allWines, sortBy, sortOrder",allWines, sortBy, sortOrder)
+  const allWinesSorted = sortAllWines(allWines, sortBy, sortOrder);
+
+  // Display or use the sorted allWinesSorted object as needed
+  console.log(allWinesSorted);
+
+  //now clear the wines div 
+  wineDiv = document.getElementById("wineDiv");
+  wineDiv.innerHTML="";
+  
+  //reload the wines but call the forEach function on the allWinesSorted Instead
+
+  loadWinesSpecific(allWinesSorted);
+}
+
+
+function getSelectedRadioValue(...radioIds) {
+  for (const id of radioIds) {
+    const radio = document.getElementById(id);
+    if (radio.checked) {
+      console.log("radio check value: " , radio.value)
+      return radio.value;
+    }
+  }
+  return null;
+}
+
+
+function sortAllWines(allWines, sortBy, sortOrder) {
+  const sortedWines = [...allWines];
+
+  sortedWines.sort((wineA, wineB) => {
+    if (sortBy === 'Name') {
+      return wineA.Name.localeCompare(wineB.Name);
+    } else if (sortBy === 'Winery') {
+      return wineA.Winery.localeCompare(wineB.Winery);
+    } else if (sortBy === 'Year') {
+      return wineA.Year - wineB.Year;
+    } else if (sortBy === 'Price') {
+      return wineA.Price - wineB.Price;
+    } else if (sortBy === 'Quality') {
+      return wineA.Quality - wineB.Quality;
+    }
+  });
+
+  if (sortOrder === 'desc') {
+    const allWinesReversed = sortedWines.slice().reverse();
+console.log("test allWinesReversed",allWinesReversed);
+    sortedWines.reverse();
+  }
+
+  //console.log(sortedWines);
+  return sortedWines;
+}
+
+//................................................................................................
+//                                 END OF SORTING
+//................................................................................................
+
+
+
+//...............................................................
+//SEARCHING FUNCTIONALITY
+//...............................................................
+const searchButton = document.getElementById('searchButton');
+searchButton.addEventListener('click', function() {
+  const searchText = document.getElementById('searchText').value;
+  const selectedAttribute = document.querySelector('input[name="attribute"]:checked').value;
+
+  const allWinesSearched = allWines.filter(wine => {
+    const attributeValue = wine[selectedAttribute];
+    return attributeValue && attributeValue.toLowerCase().includes(searchText.toLowerCase());
+  });
+
+  console.log(allWinesSearched);
+  loadWinesSpecific(allWinesSearched);
+});
+//...............................................................
+//END OF SEARCHING FUNCTIONALITY
+//...............................................................
+
+
+
+//........................................................................................................
+//               event listeners for all buttons of class all-review-modal                                    
+//........................................................................................................
+
+// Get all buttons with class "all-review-button"
+const reviewButtons = document.querySelectorAll('.all-review-button');
+
+// Add event listener to each button
+reviewButtons.forEach((button) => {
+
+  button.addEventListener('click', () => {
+    // Get the wine ID from the button's name attribute
+    const wineID = button.getAttribute('name');
+
+    // Filter the reviews based on the wine ID
+    const filteredReviews = allReviews.filter((review) => review.Wine == wineID);
+    console.log("All Reviews Button for WINE ID" , "filteredReviews" , filteredReviews);
+
+    // Get the modal element
+    const modal = document.getElementById('allReviewsModalFinal');
+
+    // Get the modal body element to populate with reviews
+    const modalBody = modal.querySelector('.modal-body');
+
+    // Clear the modal body content
+    modalBody.innerHTML = '';
+
+    // Populate the modal with reviews
+    filteredReviews.forEach((review) => {
+      // Create review elements
+      const reviewDate = document.createElement('p');
+      reviewDate.textContent = review.Date;
+
+      const reviewEmail = document.createElement('p');
+      reviewEmail.textContent = review.Email;
+
+      const reviewRating = document.createElement('p');
+      reviewRating.textContent = `Rating: ${review.Rating}/5`;
+
+      const reviewDescription = document.createElement('p');
+      reviewDescription.textContent = review.Description;
+
+      const separator = document.createElement('hr');
+
+      // Append review elements to the modal body
+      modalBody.appendChild(reviewDate);
+      console.log("reviewDate" , reviewDate);
+      modalBody.appendChild(reviewEmail);
+      modalBody.appendChild(reviewRating);
+      modalBody.appendChild(reviewDescription);
+      modalBody.appendChild(separator);
+      console.log("modalBody" , modalBody);
+
+    });//end of populating modal with reviews
+   //modal.show();
+   console.log("modal innerHTML" , modal.innerHTML);
+   console.log("modal innerHTML" , modal.innerHTML);
+
+  });
+
+});
+
+//........................................................................................................
+//               end of event listeners for all buttons of class all-review-modal                                    
+//........................................................................................................
+
+
+//........................................................................................................
+//              event listeners for all buttons of class review-button                                   
+//........................................................................................................
+// Get all buttons with the class "review-button"
+const buttons = document.querySelectorAll(".review-button");
+
+// Add event listener to each button
+buttons.forEach((button) => {
+  button.addEventListener("click", function () {
+    //clear the contents of the modal so it looks as though nothing was selected
+    document.getElementById("reviewEmail").value = "";
+  document.getElementById("reviewTextArea").value = "";
+  document.getElementById("ratingReview").value = "";
+
+  //then set the data 
+    const label = document.getElementById("labelWineID");
+    label.textContent = this.name;
+  });
+});
+
+//........................................................................................................
+//               end of event listeners for all buttons of class review-button                                          
+//........................................................................................................
+
+
+
+//........................................................................................................
+//               event listener for submit button in review modal                                          
+//........................................................................................................
+
+
+
+document.getElementById("btnSubmitReview").addEventListener("click", function() {
+  event.preventDefault();
+  // Generate a random 20-character Review_ID
+  const reviewId = Math.random().toString().slice(2, 12);
+
+  // Get the values from the input fields and elements
+  const email = document.getElementById("reviewEmail").value;
+  const currentDate = new Date().toLocaleDateString();
+  const description = document.getElementById("reviewTextArea").value;
+  const rating = document.getElementById("ratingReview").value;
+  const wine = document.getElementById("labelWineID").textContent;
+
+  // Create the review object
+  const review = {
+    "Review_ID": reviewId,
+    "Email": email,
+    "Date": currentDate,
+    "Description": description,
+    "Rating": rating,
+    "Wine": wine
+  };
+
+  // Log the review object to the console
+  console.log(review);
+
+  //and then close the modal
+  // Get a reference to the close button
+      var closeModalButton = document.getElementById("btnSubmitReview");
+
+      // Get a reference to the modal element
+      var modal = document.getElementById("reviewModal");
+
+      modal.classList.remove("show");
+});
+
+
+//........................................................................................................
+//               end of event listener for submit button in review modal                                          
+//........................................................................................................
+
+
+
+
+
+
+
+}
+ //........................................................................................................
+//                                  end of startAllLoading function                                             
+//........................................................................................................
+
+
+}//end of window onload function************************************************************************************
+</script>
+
+
+<!-- adding link to backend/ajax file-->
+<script type="text/javascript" src="backend/scripts/ajax.js"></script>
+
+<!-- adding link to backend/ajax file-->
+
+</div><!--end of the main body div-->
+
+
+
+
+</body>
+
+
+
+
+
+</html>
