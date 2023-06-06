@@ -6,7 +6,7 @@ const userModel = require('../models/userModel');
 
 
 const getUserByEmail = (req, res) => {
-    const email = req.params.email;
+    const email = req.params.Email;
     userModel.getUserByEmail(email, (error, result) => {
         if (error) 
         {
@@ -17,7 +17,7 @@ const getUserByEmail = (req, res) => {
 };
 
 const getAllUser = (req, res) => {
-    wineModel.getAllUser((error, result) => {
+    userModel.getAllUser((error, result) => {
         if (error) 
         {
             return res.status(500).json({ error }); //remember to sanitize
@@ -29,17 +29,18 @@ const getAllUser = (req, res) => {
 
 /*-------------------------Create---------------------------------------*/
 
-
 const createUser = (req, res) => {
     const userData = req.body;
     userModel.createUser(userData, (error, result) => {
         if (error) 
         {
+            console.log("Error in createUser", error);
             return res.status(500).json({ error });
         }
         res.json(result);
     });
 };
+
 
 /*-------------------------Updates---------------------------------------*/
 

@@ -133,55 +133,64 @@ function createTableEntryOnServer(tableName, data)
 }
 
 /*-------------------------Update---------------------------------------*/
-//user
+//wine
 
-function updateTableEntry(tableName, ID, updatedTableData)
-{
-    getById(tableName, ID, function(updatedTable) 
-    {
+function updateTableEntry(tableName, ID, updatedTableData) {
+    getById(tableName, ID, function(updatedTable) {
         //perform updates
-        if(tableName == "users")
-        {
-            userUpdate(updatedTableData, updatedTable);
+        if(tableName == "Wine") {
+            updatedTable = wineUpdate(updatedTableData, updatedTable);
+            updateOnServer(tableName, ID, updatedTable);
         }
-        //else if()
-        // {
-
-        // }
-        else //can remove after testing
-        {
+        else {
             console.log("invalid table name");
         }
-        
     });
-
-    updateOnServer(tableName, email, user);
 }
 
-// need one for each table
-function userUpdate(updatedTableData, updatedTable)
-{
-    updatedTable.Email = updatedTableData.Email;
-    updatedTable.First_Name = updatedTableData.First_Name;
-    updatedTable.Last_Name = updatedTableData.Last_Name;
-    updatedTable.Birthday = updatedTableData.Birthday;
-    updatedTable.Country = updatedTableData.Country;
-    updatedTable.Can_Manage = updatedTableData.Can_Manage;
-    updatedTable.Password = updatedTableData.Password; //remember to hash
+// need one for each table that update
+// function userUpdate(updatedTableData, updatedTable)
+// {
+//     updatedTable.Email = updatedTableData.Email;
+//     updatedTable.First_Name = updatedTableData.First_Name;
+//     updatedTable.Last_Name = updatedTableData.Last_Name;
+//     updatedTable.Birthday = updatedTableData.Birthday;
+//     updatedTable.Country = updatedTableData.Country;
+//     updatedTable.Can_Manage = updatedTableData.Can_Manage;
+//     updatedTable.Password = updatedTableData.Password; //remember to hash
+// }
+
+function wineUpdate(updatedTableData, updatedTable) {
+    // Access the first element of the array
+    var data = updatedTableData[0];
+
+    updatedTable.Wine_ID = data.Wine_ID;
+    updatedTable.Name = data.Name;
+    updatedTable.Winery = data.Winery;
+    updatedTable.Description = data.Description;
+    updatedTable.Year = data.Year;
+    updatedTable.Region = data.Region;
+    updatedTable.Price = data.Price;
+    updatedTable.Image = data.Image;
+    updatedTable.Quality = data.Quality;
+    updatedTable.Subtype = data.Subtype;
+    updatedTable.Category = data.Category;
+    updatedTable.Pairing = data.Pairing;
+
+    return updatedTable;
 }
 
-function updateTableEntry(tableName, ID, updatedTableData) 
+function updateOnServer(tableName, ID, updatedTableData) 
 {
-    let link = `http://localhost:3030/${tableName}/${ID}`
+    let link = `http://localhost:3030/${tableName}/${ID}`;
     var xhr = new XMLHttpRequest();
-    xhr.open('PUT', link, true); // Change to PATCH if needed
+    xhr.open('PUT', link, true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.onload = function() {
         if (this.status === 200) {
             var data = JSON.parse(this.responseText);
             console.log(data); //testing
-        } 
-        else {
+        } else {
             console.error('error:', this.status);
         }
     };
@@ -190,6 +199,7 @@ function updateTableEntry(tableName, ID, updatedTableData)
     };
     xhr.send(JSON.stringify(updatedTableData));
 }
+
 
 /*-------------------------Delete---------------------------------------*/
 
@@ -223,15 +233,43 @@ function deleteTableEntryOnServer(tableName, ID)
 //create user
 
 //create the controllers modules and routes for CRUD methods 
-//think of way to display succes or failure messages on clientSide
+//think of way to display success or failure messages on clientSide
 //ie when a delete or get ID fails
 // or when a user is successfully deleted(Admin side) or added(client and admin) or updated(client and Admin)
 //write updates for specific data object ir user, wine winery ...
 
+// need to add customer entry when user is added
+
 
 /*
-    owener
+    owner
     crud wines
 
     user add review
+*/
+
+/*
+    Users
+    -> create //done
+        ->also add customer //done
+    -> read //done
+        -> all //done
+        -> single //done
+    -> update ?
+
+    Reviews
+    -> create ****
+    -> read //done
+        -> all //done
+        -> single //done
+
+    Wine
+    -> create//done
+    -> read //done
+        -> all //done
+        -> single //done
+    -> update ****
+    -> delete //done
+
+
 */

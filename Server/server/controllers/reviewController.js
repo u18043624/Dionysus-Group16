@@ -1,10 +1,21 @@
-const reviewsModel = require('../models/reviewModel');
+const reviewModel = require('../models/reviewModel');
 
 /*--------------------------Gets----------------------------------*/
 
 
 const getAllReview = (req, res) => {
-    reviewsModel.getReviews( (error, result) => {
+    reviewModel.getAllReview( (error, result) => {
+        if (error) 
+        {
+            return res.status(500).json({ error }); //remember to sanitize
+        }
+        res.json(result);
+    });
+};
+
+const getReviewByID = (req, res) => {
+    const ID = req.params.Review_ID;
+    reviewModel.getReviewByID(ID, (error, result) => {
         if (error) 
         {
             return res.status(500).json({ error }); //remember to sanitize
@@ -19,7 +30,7 @@ const getAllReview = (req, res) => {
 
 const createReview = (req, res) => {
     const reviewData = req.body;
-    reviewsModel.createReviews(reviewData, (error, result) => {
+    reviewModel.createReview(reviewData, (error, result) => {
         if (error) 
         {
             return res.status(500).json({ error });
@@ -31,4 +42,4 @@ const createReview = (req, res) => {
 
 /*-------------------------Exports---------------------------------------*/
 
-module.exports = { getAllReview, createReview};
+module.exports = { getAllReview, createReview, getReviewByID};

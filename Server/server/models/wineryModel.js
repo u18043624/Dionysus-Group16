@@ -18,12 +18,21 @@ const getAllWinery = (cb) => {
       }
       cb(null, results);
     });
-  };
-  
-  //get wineries based on the  on a cernain factor or one condition e.g search or get by id for the user and owner
+};
+
+const getWineryByID = (ID, cb) => {
+  dbConnect.query('SELECT * FROM Winery WHERE Winery_ID = ?', [ID], (error, results) => {
+      if (error) 
+      {
+          return cb(error, null);
+      }
+      cb(null, results[0]);
+  });
+}
+
 
 
 
 
 //exports function
-module.exports = {getAllWinery};
+module.exports = {getAllWinery, getWineryByID};
