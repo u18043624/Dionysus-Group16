@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dionysus Wine Catalogue Management</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  
+  <style>
+    body {
+      font-family: "GeosansLight", sans-serif;
+    }
+
+    .table-responsive-custom {
+     /*   table-layout: auto;*/
+      table-layout: auto;
+    }
+    .table {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+    .navbar {
+      background-color: #722F37;
+      color: white;
+      margin: 25px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 10px;
+    }
+    .wineries-heading {
+      margin: 25px;
+    }
+    .mainSection{
+      display: flex;
+       
+    }
+    .left-section {
+      width: 25%;
+      float: left;
+      padding-left: 250px;
+    }
+    .right-section {
+      width: 75%;
+      float: right;
+      padding: 25px;
+      
+    }
+    .titleText {
+    text-align: center;
+  }
+  .centered-div {
+    justify-content: space-between;
+   /*  position: absolute; */
+   /*  top: 50%; */
+   /*  left: 50%; */
+   /*  transform: translate(-50%, -50%); */
+  }
+
+
+/*     .footer {
+      background-color: #222222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .footer img {
+      height: 20px;
+      margin: 5px;
+    } 
+    .footer p {
+      font-size: 12px;
+    } */
+    .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #222222;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  .footer img {
+    height: 20px;
+    margin: 5px;
+  }
+  .footer p {
+    font-size: 12px;
+  }
+    .item {
+    width: 55%;
+    /* float: left; */
+    margin-bottom: 25px;
+  }
+  .item h3 {
+    margin-top: 0;
+  }
+  .item img {
+    width: 100%;
+    height: auto;
+  }
+
+
+
+  /*Wineries Colours*/
+    .custom-table {
+    background-color: #222222;
+    color: white;
+    }
+
+    .custom-table th {
+    background-color: #222222;
+    color: white;
+    }
+
+    .custom-table td {
+    background-color: white;
+    color: #222222;
+    }
+/* 
+    .btn {
+  background-color: #222222;
+  color: white;
+} */
+
+
+.btn {
+  background-color: #222222;
+  color: white;
+  border-color: #722F37;
+}
+
+.btn:hover {
+  background-color: #722F37;
+  color: white;
+  border-color: #722F37;
+}
+
+.btn:active {
+  background-color: #722F37;
+  color: white;
+  border-color: #722F37;
+}
+
+/*styling the two buttons that add or UpdateDelete a wine*/
+
+.btn-container {
+    text-align: center;
+    margin-top: 20px;
+
+}
+
+.btn-container .btn {
+    width: 30%;
+    font-size: 24px;
+}
+
+
+
+
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div>
+      <span><h2>Dionysus</h2></span>
+    </div>
+    <div>
+     
+      
+      <a href="#">Log Out</a>
+    </div>
+  </div>
+
+  <div class="wineries-heading">
+    <h1 class="titleText">Wine Catalogue Management</h1>
+  </div>
+
+<!--   <button id="addWine">Add Wine</button>
+
+  <button id="delteUpdateWine">Update or Delete Wines</button> -->
+
+
+  <!--Two buttons to select the whether to -->
+    <div class="btn-container">
+      <button class="btn btn-primary" data-toggle="modal" data-target="#addWineModal">Add a Wine</button>
+     <!--  <button class="btn btn-primary">Update or Delete Wine</button> -->
+    </div>
+  
+
+  <div id="searchWineDiv" class="mainDiv centered-div">
+    <!-- the div for the search button - owner searches by wine name-->
+    
+<!-- START OF ADDING A WINE-->
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addWineModal">
+    Add a Wine
+  </button> -->
+  
+  <!--........................................................................................................-->
+<!--                                     DEFINE THE ADD WINE MODAL                                         .-->
+<!--........................................................................................................-->
+
+  <!-- Modal -->
+  <div class="modal fade" id="addWineModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+
+            <!-- THIS IS THE DATA VALUES TO BE BE FILLED IN TO ADD WINE-->
+            <div class="container">
+                <form id="addWineForm" >
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add a Wine</h5>
+
+                  <div class="form-group">
+                    <label for="name">Wine Name:</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter name">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="description">Wine Description:</label>
+                    <input type="text" class="form-control" id="description" placeholder="Enter description">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="year">Year:</label>
+                    <input type="date" class="form-control" id="year">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="region">Region:</label>
+                    <input type="text" class="form-control" id="region" placeholder="Enter region">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="food_pairing">Food pairing:</label>
+                    <input type="text" class="form-control" id="food_pairing" placeholder="Enter food pairings">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="image">Image Link:</label>
+                    <input type="text" class="form-control" id="image" placeholder="Enter wine image">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="sub-type">Sub-type:</label>
+                    <input type="text" class="form-control" id="sub-type" placeholder="Enter wine's sub-type eg. Pinot Noir, Babera, Syrah">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" class="form-control" id="price" placeholder="Enter price">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="quality">Quality (1 - 10):</label>
+                    <input type="range" class="form-control-range" id="quality" min="1" max="10">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select class="form-control" id="category">
+                      <option value="red">red</option>
+                      <option value="sparkling">sparkling</option>
+                      <option value="white">white</option>
+                    </select>
+                  </div>
+
+                
+
+                 <!--  <button type="submit" class="btn btn-primary">Submit</button> -->
+                </form>
+              </div>
+              <!-- THIS IS THE DATA VALUES TO BE BE FILLED IN-->
+
+
+         
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="saveChangesButton">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- START OF ADDING A WINE-->
+<!--........................................................................................................-->
+<!--                                     END OF DEFINE THE ADD WINE MODAL                                         .-->
+<!--........................................................................................................-->
+
+
+
+
+<!--........................................................................................................-->
+<!--                                     DEFINE THE UPDATE MODAL                                         .-->
+<!--........................................................................................................-->
+
+
+
+
+
+
+<!--........................................................................................................-->
+<!--                                     END OF DEFINE THE UPDATE WINE MODAL                                         .-->
+<!--........................................................................................................-->
+
+
+<div id="deleteUpdateDiv">
+
+    
+<!-- START OF UPDATING OR DELETING  A WINE-->
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateWineModal" id="updateDeleteWine">
+    Update or Delete Wines
+  </button> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="updateWineModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Update Wine</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btnSaveChangesAdd">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- END OF DELETING OR UPDATING A WINE -->
+</div>
+<br><br><br>
+
+
+
+
+
+
+<!-- TABLE STYLED USING BOOTSTRAP-->
+
+<div class="container">
+    <table class="table table-responsive table-responsive-custom">
+      <thead>
+        <tr><!-- 
+          <th>Name</th>
+          <th>Description</th>
+          <th>Year</th>
+          <th>Region</th>
+          <th>Price</th>
+          <th>Quality</th>
+          <th>Category</th>
+          <th>Actions</th> -->
+
+
+        </tr>
+      </thead>
+      <tbody style="width: 1500px;" id="tableBody"></tbody>
+    </table>
+  </div>
+
+<!--END OF THE TABLE STYLED USING BOOTSTRAP-->
+
+
+<div class="divBottom">
+  <div class="footer"  >
+    <p>CONNECT WITH US</p>
+    <a href="#" class="fa fa-linkedin"></a>
+    <a href="#" class="fa fa-google"></a>
+    <a href="#" class="fa fa-facebook"></a>
+    <a href="#" class="fa fa-instagram"></a>
+    <a href="#" class="fa fa-twitter"></a>
+    <a href="#" class="fa fa-pinterest"></a>
+    <br>
+    <p>Dionysus @2023</p>
+  </div>
+
+  </div>
+</div> <!--end of divBottom-->
+</body>
+
+
+
+
+<!-- script for table with boostrap-->
+
+<script>
+
+var allWinesDummyData = [
+  {
+    "Wine_ID": "1",
+    "Name": "Chardonnay",
+    "Winery": "Winery A",
+    "Description": "A classic white wine with rich flavors.",
+    "Year": 2019,
+    "Region": "California",
+    "Price": 25.99,
+    "Image": "https://images.pexels.com/photos/774455/pexels-photo-774455.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 9,
+    "Subtype": "Dry",
+    "Category": "White",
+    "Pairing": "Seafood"
+  },
+  {
+    "Wine_ID": "2",
+    "Name": "Cabernet Sauvignon",
+    "Winery": "Winery B",
+    "Description": "A bold red wine with intense flavors.",
+    "Year": 2016,
+    "Region": "Napa Valley",
+    "Price": 39.99,
+    "Image": "https://images.pexels.com/photos/15780335/pexels-photo-15780335/free-photo-of-wine-in-glass-in-woman-hand.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 8,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Steak"
+  },
+  {
+    "Wine_ID": "3",
+    "Name": "Riesling",
+    "Winery": "Winery C",
+    "Description": "A sweet white wine with fruity notes.",
+    "Year": 2020,
+    "Region": "Mosel",
+    "Price": 16.99,
+    "Image": "https://images.pexels.com/photos/15567450/pexels-photo-15567450/free-photo-of-mirror-baguette-wine-and-strawberries-picnic.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Sweet",
+    "Category": "White",
+    "Pairing": "Spicy cuisine"
+  },
+  {
+    "Wine_ID": "4",
+    "Name": "Pinot Noir",
+    "Winery": "Winery D",
+    "Description": "A delicate red wine with subtle flavors.",
+    "Year": 2018,
+    "Region": "Burgundy",
+    "Price": 29.99,
+    "Image": "https://images.pexels.com/photos/7282899/pexels-photo-7282899.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 8,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Salmon"
+  },
+  {
+    "Wine_ID": "5",
+    "Name": "Sauvignon Blanc",
+    "Winery": "Winery E",
+    "Description": "A refreshing white wine with citrus notes.",
+    "Year": 2021,
+    "Region": "Marlborough",
+    "Price": 18.99,
+    "Image": "https://images.pexels.com/photos/9397580/pexels-photo-9397580.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Dry",
+    "Category": "White",
+    "Pairing": "Goat cheese"
+  },
+  {
+    "Wine_ID": "6",
+    "Name": "Malbec",
+    "Winery": "Winery F",
+    "Description": "A robust red wine with dark fruit flavors.",
+    "Year": 2017,
+    "Region": "Mendoza",
+    "Price": 24.99,
+    "Image": "https://images.pexels.com/photos/12176250/pexels-photo-12176250.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 8,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Grilled meats"
+  },
+  {
+    "Wine_ID": "7",
+    "Name": "Gewürztraminer",
+    "Winery": "Winery G",
+    "Description": "A fragrant white wine with floral aromas.",
+    "Year": 2020,
+    "Region": "Alsace",
+    "Price": 21.99,
+    "Image": "https://images.pexels.com/photos/10045952/pexels-photo-10045952.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Off-dry",
+    "Category": "White",
+    "Pairing": "Asian cuisine"
+  },
+  {
+    "Wine_ID": "8",
+    "Name": "Merlot",
+    "Winery": "Winery H",
+    "Description": "A smooth red wine with velvety tannins.",
+    "Year": 2018,
+    "Region": "Bordeaux",
+    "Price": 27.99,
+    "Image": "https://images.pexels.com/photos/11736166/pexels-photo-11736166.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 8,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Lamb"
+  },
+  {
+    "Wine_ID": "9",
+    "Name": "Champagne",
+    "Winery": "Winery I",
+    "Description": "A sparkling wine with crisp acidity.",
+    "Year": 2015,
+    "Region": "Champagne",
+    "Price": 39.99,
+    "Image": "https://images.pexels.com/photos/9397571/pexels-photo-9397571.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 9,
+    "Subtype": "Dry",
+    "Category": "Sparkling",
+    "Pairing": "Oysters"
+  },
+  {
+    "Wine_ID": "10",
+    "Name": "Zinfandel",
+    "Winery": "Winery J",
+    "Description": "A bold and fruity red wine with hints of spice.",
+    "Year": 2017,
+    "Region": "California",
+    "Price": 23.99,
+    "Image": "https://images.pexels.com/photos/7670333/pexels-photo-7670333.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Barbecue"
+  },
+  {
+    "Wine_ID": "11",
+    "Name": "Viognier",
+    "Winery": "Winery K",
+    "Description": "An aromatic white wine with apricot and floral notes.",
+    "Year": 2019,
+    "Region": "Rhône Valley",
+    "Price": 20.99,
+    "Image": "https://images.pexels.com/photos/1479706/pexels-photo-1479706.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Dry",
+    "Category": "White",
+    "Pairing": "Thai cuisine"
+  },
+  {
+    "Wine_ID": "12",
+    "Name": "Shiraz",
+    "Winery": "Winery L",
+    "Description": "A full-bodied red wine with dark fruit and peppery flavors.",
+    "Year": 2016,
+    "Region": "Barossa Valley",
+    "Price": 28.99,
+    "Image": "https://images.pexels.com/photos/16933511/pexels-photo-16933511/free-photo-of-bottle-of-wine-on-table.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 8,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Grilled steak"
+  },
+  {
+    "Wine_ID": "13",
+    "Name": "Chenin Blanc",
+    "Winery": "Winery M",
+    "Description": "A versatile white wine with notes of honey and stone fruit.",
+    "Year": 2020,
+    "Region": "Loire Valley",
+    "Price": 17.99,
+    "Image": "https://images.pexels.com/photos/16854496/pexels-photo-16854496/free-photo-of-woman-holding-glass-of-wine.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Dry",
+    "Category": "White",
+    "Pairing": "Roast chicken"
+  },
+  {
+    "Wine_ID": "14",
+    "Name": "Barolo",
+    "Winery": "Winery N",
+    "Description": "A prestigious red wine with complex flavors and firm tannins.",
+    "Year": 2014,
+    "Region": "Piedmont",
+    "Price": 59.99,
+    "Image": "https://images.pexels.com/photos/15846879/pexels-photo-15846879/free-photo-of-grapes-and-a-glass-of-red-wine.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 9,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Truffle dishes"
+  },
+  {
+    "Wine_ID": "15",
+    "Name": "Grenache",
+    "Winery": "Winery O",
+    "Description": "A medium-bodied red wine with red berry and spice notes.",
+    "Year": 2017,
+    "Region": "Rhone Valley",
+    "Price": 22.99,
+    "Image": "https://images.pexels.com/photos/15786533/pexels-photo-15786533/free-photo-of-wine-cellar-filled-with-bottles-of-red-wine.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "Quality": 7,
+    "Subtype": "Dry",
+    "Category": "Red",
+    "Pairing": "Mediterranean cuisine"
+  }
+
+];//end of wineries array
+
+ //   const allWines = allWinesDummyData;
+
+
+//........................................................................................................
+//               calling function to assign all wines to results of wines table                                       
+//........................................................................................................
+
+window.onload = function() {//start of onload function *********************************************************************
+
+  tableName = "Wine";
+  var tableValuesSecond;
+  var countTableVals = 0;
+// const allWines = tableValuesSecond;
+var allWines;
+
+  getAllTable(tableName)
+  .then(AllTableValues => {
+      if (AllTableValues && AllTableValues.length > 0 && 'Wine_ID' in AllTableValues[0]) {
+        //meaning that we have fetched the data
+        
+        tableValuesSecond = AllTableValues;
+         allWines = AllTableValues;
+        console.log("allWines has been assigned",allWines);
+        console.log("tableValuesSecond has been assigned",tableValuesSecond);
+          console.log(AllTableValues[0].Wine_ID);
+          console.log("AllTableValues[0]",AllTableValues[0])
+          console.log("AllTableValues",AllTableValues)
+          startAllLoading();
+
+          // Assign the fetched data to tableValuesSecond
+         // createTable(); // Call createTable function here to populate the table with fetched data
+      } else {
+          console.log('Data not in expected format');
+      }
+  })
+  .catch(error => {
+      console.error(error);
+  });
+
+  //and assign tableValuesSecond to allWines
+
+
+ //........................................................................................................
+//               end of calling function to assign all wines to results of wines table                                           
+//........................................................................................................
+
+
+
+
+
+
+
+
+
+
+function startAllLoading() {
+ //........................................................................................................
+//                                 start of startAllLoading function                                           
+//........................................................................................................
+
+//...............................................................................................
+//SAVE CHANGES BUTTON CLICKED? VALIDATE DATA 
+//...............................................................................................
+
+function performValidation() {
+      
+      var nameInput = document.getElementById("name");
+      var descriptionInput = document.getElementById("description");
+      var yearOfWine = document.getElementById("year");
+      var regionOfWinery = document.getElementById("region");
+
+      //get the form from the modal
+      var form = document.getElementById("addWineForm");
+    var inputs = form.getElementsByTagName("input");
+    var initialValues = {};
+    var bFormFilled = false;
+
+    var name = form.elements["name"].value;
+    var description = form.elements["description"].value;
+    var region = form.elements["region"].value;
+    var price = form.elements["price"].value;
+    var food_pairing = form.elements["food_pairing"];
+    var year = form.elements["year"].value;
+    var category = form.elements["category"].value;
+    
+
+      if (!name || !description)
+      {
+        alert("Please fill in the name and/or description of the wine");
+        return false;
+      }
+
+      if(!region || !food_pairing)
+      {
+        alert("Please fill in the region and/or food_pairing");
+        return falsez
+      }
+
+      if(price < 0)
+      {
+        alert("Please fill in the price of the wine")
+        return false;
+      }
+
+      if(!year)
+      {
+        alert("Please select the wine date")
+        return false;
+      }
+
+      if(!category)
+      {
+        alert("Please enter the category of the wine");
+        return false;
+      }
+      // Validation successful
+      // Perform other actions or submit the 
+      alert("Input validation successful");
+
+      return true;
+    }//end of event listener 
+
+
+
+        // Attach event listener to the button
+    var saveChangesButton = document.getElementById("saveChangesButton");
+    saveChangesButton.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent form submission
+
+      // Call the validation function
+      var isValid = performValidation();
+
+      // If validation is successful, you can perform further actions or submit the form
+      if (isValid) {
+        // Perform other actions or submit the form
+        alert("Validation successful! Form can be submitted.");
+      }
+      else
+      {
+         alert("Fill in the missing details")
+      }
+    });
+
+
+
+//...............................................................................................
+//END OF VALIDATING DATA 
+//...............................................................................................
+
+// Sample JSON data
+//..........................................................................................
+/*     var tableValuesSecond = [
+      {
+        "Name": "Wine 1",
+        "Description": "Description 1",
+        "Year": "2022",
+        "Region": "South Africa",
+        "Price": 10.99,
+        "Quality": 7,
+        "Category": "Red Wine"
+      },
+      {
+        "Name": "Wine 2",
+        "Description": "Description 2",
+        "Year": "2021",
+        "Region": "Italy",
+        "Price": 15.99,
+        "Quality": 8,
+        "Category": "White Wine"
+      }
+      // Add more objects as needed
+    ];
+ */
+
+// var tableValuesSecond;
+    // Function to create and populate the table
+    function createTable() {
+      var tableBody = document.getElementById("tableBody");
+
+     // tableValuesSecond.forEach(function (wine) {
+        allWines.forEach(function (wine) {
+          console.log("wine",wine)
+       
+        var row = document.createElement("tr");
+        Object.values(wine).forEach(function (value) {
+          var cell = document.createElement("td");
+          cell.textContent = value;
+          row.appendChild(cell);
+         
+        });
+        console.log("row for wine of ID",wine.Wine_ID , row)
+
+        // Create action buttons
+        var actionsCell = document.createElement("td");
+
+        var updateButton = document.createElement("button");
+        updateButton.setAttribute('name', wine.Wine_ID);
+        //console.log("updateButton.name",updateButton.name)
+        updateButton.className = "btn btn-primary";
+        updateButton.textContent = "Update Wine";
+        actionsCell.appendChild(updateButton);
+
+
+        var deleteButton = document.createElement("button");
+        deleteButton.setAttribute('name', wine.Wine_ID);
+       // console.log("deleteButton.name",deleteButton.name)
+        deleteButton.className = "btn btn-danger ml-2";
+        deleteButton.textContent = "Delete Wine";
+        actionsCell.appendChild(deleteButton);
+
+        row.appendChild(actionsCell);
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Call the createTable function on page load
+   // createTable();
+
+
+
+
+
+    //new table made using the json object
+    function tableForAllWines() {
+// Get the reference to the table element
+const table = document.createElement('table');
+table.classList.add('table', 'table-striped');
+
+// Create the table header
+const tableHeader = document.createElement('thead');
+const headerRow = document.createElement('tr');
+headerRow.innerHTML = `
+  <th >Wine ID</th>
+  <th>Name</th>
+  <th>Winery</th>
+  <th>Description</th>
+  <th>Year</th>
+  <th>Region</th>
+  <th>Price</th>
+  <th>Quality</th>
+  <th>Subtype</th>
+  <th>Category</th>
+  <th>Pairing</th>
+  <th>Action</th>
+`;
+tableHeader.appendChild(headerRow);
+table.appendChild(tableHeader);
+
+// Create the table body
+const tableBody = document.createElement('tbody');
+//for (const wine of allWines) {
+  for (const wine of tableValuesSecond) {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td style="width: 100px;">${wine.Wine_ID}</td>
+    <td>${wine.Name}</td>
+    <td>${wine.Winery}</td>
+    <td style="width: 300px;">${wine.Description}</td>
+    <td>${wine.Year}</td>
+    <td>${wine.Region}</td>
+    <td>${wine.Price}</td>
+    <td style="width: 100px;">${wine.Quality}</td>
+    <td style="width: 100px;">${wine.Subtype}</td>
+    <td style="width: 100px;">${wine.Category}</td>
+    <td style="width: 200px;">${wine.Pairing}</td>
+    <td>
+      <button class="btn btn-primary btn-Update" name="${wine.Wine_ID}" onclick="updateWine(this)">Update Wine</button>
+      <button class="btn btn-danger btn-Delete" name="${wine.Wine_ID}" onclick="deleteWine(this)">Delete Wine</button>
+    </td>
+  `;
+  tableBody.appendChild(row);
+}
+table.appendChild(tableBody);
+
+// Append the table to a container element in the HTML
+      const container = document.getElementById('tableBody');
+      container.appendChild(table);
+      console.log("the entire table",table);
+    }//end of tableForAllWines function
+
+    tableForAllWines();
+
+
+
+    //........................................................................................................
+//              event listeners for all buttons of class  btn-Update                                   
+//........................................................................................................
+// Get all buttons with the class " btn-Update"
+/* const buttons = document.querySelectorAll(".btn-Update");
+
+// Add event listener to each button
+buttons.forEach((button) => {
+  button.addEventListener("click", function () {
+    //clear the contents of the modal so it looks as though nothing was selected
+    console.log("Update button was clicked with ID : " , button.name)
+    document.getElementById("reviewEmail").value = "";
+  document.getElementById("reviewTextArea").value = "";
+  document.getElementById("ratingReview").value = "";
+
+  //then set the data 
+    const label = document.getElementById("labelWineID");
+    label.textContent = this.name;
+  });
+}); */
+
+//........................................................................................................
+//               end of event listeners for all buttons of class  btn-Update                                          
+//........................................................................................................
+
+
+
+//........................................................................................................
+//              event listeners for all buttons of class btn-Delete                                   
+//........................................................................................................
+// Get all buttons with the class "btn-Delete"
+const deletebuttons = document.querySelectorAll(".btn-Delete");
+
+// Add event listener to each button
+deletebuttons.forEach((button) => {
+  
+  button.addEventListener("click", function () {
+    console.log("Delete button was clicked with ID : " , button.name)
+    //clear the contents of the modal so it looks as though nothing was selected
+    document.getElementById("reviewEmail").value = "";
+  document.getElementById("reviewTextArea").value = "";
+  document.getElementById("ratingReview").value = "";
+
+  //then set the data 
+    const label = document.getElementById("labelWineID");
+    label.textContent = this.name;
+  });
+});
+
+//........................................................................................................
+//               end of event listeners for all buttons of class btn-Delete                                          
+//........................................................................................................
+//
+//
+//
+
+
+ //........................................................................................................
+//                                  end of startAllLoading function                                             
+//........................................................................................................
+
+}
+
+
+
+
+
+
+
+}//END OF WINDOW.ONLOAD FUNCTION**********************************************************
+
+
+
+
+
+  </script>
+
+<!--end of second table using bootstrap-->
+<!-- adding link to backend/ajax file-->
+<script type="text/javascript" src="backend/scripts/ajax.js"></script>
+<!-- adding link to backend/ajax file-->
+
+</html>
+

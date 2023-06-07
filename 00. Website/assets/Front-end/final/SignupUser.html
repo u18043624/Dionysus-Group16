@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist signup</title>
+    <link rel="Stylesheet" href = "Signup.css">
+</head>
+<body>
+    <h1>Sign Up</h1>
+
+    <div class="container">
+        <form method="post" >
+        
+
+            <label for="email"><b>Email</b></label>
+            <input type="email" placeholder="Enter Email" name="email" required><br>
+
+            <label for="first_name"><b>First Name</b></label>
+            <input type="text" placeholder="Enter First Name" name="first_name" required><br>
+
+            <label for="last_name"><b>Last Name</b></label>
+            <input type="text" placeholder="Enter Last Name" name="last_name" required><br>
+
+            <label for="date_of_birth"><b>Date of Birth</b></label>
+            <input type="date" placeholder="Enter Date of Birth" name="date_of_birth" required><br>
+            
+            <label for="location"> Country</label>
+            <input type="text" placeholder="Enter your Country" name="country" required><br>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required><br>
+            <label for="terms">
+                <input type="checkbox" id="terms" name="terms" required>
+                I have read and agree to the terms and services   
+                 <a href="Terms_&_privacy.html" style="color:#722f37">Terms & Privacy</a>
+            </label><br><br>
+            <button id="createEntryButton">Create Entry</button>
+        
+
+    
+        </form>
+    </div>
+    <script>
+
+document.getElementById('createEntryButton').addEventListener('click', function() {
+    event.preventDefault()
+
+    
+        var email = document.getElementsByName('email')[0].value;
+        var firstName = document.getElementsByName('first_name')[0].value;
+        var lastName = document.getElementsByName('last_name')[0].value;
+        var dateOfBirth = document.getElementsByName('date_of_birth')[0].value;
+        var password = document.getElementsByName('psw')[0].value;
+        var country = document.getElementsByName('country')[0].value;
+        
+        var userData = {
+            Email: email,
+            First_Name: firstName,
+            Last_Name: lastName,
+            Birthday: dateOfBirth,
+            Country: country,
+            Can_Manage: "N",
+            Password: password
+        };
+
+        var tableName = "Users";
+        createTableEntryOnServer(tableName, userData);
+        
+     
+    });
+
+    </script>
+<script src="backend/scripts/ajax.js"></script>
+<!-- <script src="../../../03. ServerTesting/scripts/script.js"></script> -->
+
+
+</body>
+</html>

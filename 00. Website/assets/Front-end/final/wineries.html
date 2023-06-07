@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dionysus Wineries</title>
+  <style>
+    .wineries-heading {
+      margin: 25px;
+    }
+    .mainSection{
+        display: flex;
+    }
+    .left-section {
+      width: 25%;
+      float: left;
+      padding-left: 250px;
+    }
+    .right-section {
+      width: 75%;
+      float: right;
+      padding: 25px;
+      
+    }
+    .titleText {
+    text-align: center;
+  }
+  .centered-div {
+    justify-content: space-between;
+   /*  position: absolute; */
+   /*  top: 50%; */
+   /*  left: 50%; */
+   /*  transform: translate(-50%, -50%); */
+  }
+
+
+/*     .footer {
+      background-color: #222222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .footer img {
+      height: 20px;
+      margin: 5px;
+    }
+    .footer p {
+      font-size: 12px;
+    } */
+  .footer img {
+    height: 20px;
+    margin: 5px;
+  }
+  .footer p {
+    font-size: 12px;
+  }
+    .item {
+    width: 55%;
+    /* float: left; */
+    margin-bottom: 25px;
+  }
+  .item h3 {
+    margin-top: 0;
+  }
+  .item img {
+    width: 100%;
+    height: auto;
+  }
+
+  /*stylling for dynamically added wine pages*/
+  .winery {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .winery-name {
+      font-weight: bold;
+    }
+
+    .winery-image {
+      max-width: 70%;
+      margin-top: 10px;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ 
+ 
+  <link rel="stylesheet" href="wineries.css">
+</head>
+<body>
+  <div class ="mainBodyDiv">
+  <div class="navbar header">
+    <div>
+      <span><h2>Dionysus</h2></span>
+    </div>
+    <div>
+      <a href="#">Home</a>
+      <a href="#">Wines</a>
+      <a href="#">Wineries</a>
+      <a href="#">About</a>
+    </div>
+  </div>
+
+  <div class="wineries-heading">
+    <h1 class="titleText">Wineries</h1>
+  </div>
+
+<!-- <div class="mainSection centered-div">
+  <div class="left-section">
+    <h2>Province</h2>
+    
+  </div> -->
+
+  <div class="left-section">
+    <h2>Province</h2>
+    <!--now comes the frop down menu with the values to the left-->
+    <select id="dropDownProvince">
+      <option value="">Select Province</option>
+      <option value="Eastern Cape">Eastern Cape</option>
+      <option value="Free State">Free State</option>
+      <option value="Gauteng">Gauteng</option>
+      <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+      <option value="Limpopo">Limpopo</option>
+      <option value="Mpumalanga">Mpumalanga</option>
+      <option value="North West">North West</option>
+      <option value="Northern Cape">Northern Cape</option>
+      <option value="Western Cape">Western Cape</option>
+    </select>
+
+    
+  </div> <!--end of div main section-->
+
+
+  <div class="right-section">
+  <div class="image-container">
+
+    <!-- Add more items here -->
+    <!-- Example: -->
+    <!-- <div class="item">
+         <h3>Name of Winery 3</h3>
+         <img src="winery3.jpg" alt="Winery 3">
+         <p>Address of Winery 3</p>
+       </div> -->
+  </div>
+
+
+
+
+  <div id="wineryList"></div>
+  <div id="wineriesContainer"></div>
+
+
+
+
+</div><!-- end of right section div-->
+</div>
+ 
+
+<div class="divBottom">
+  <div class="footer"  >
+    <p>CONNECT WITH US</p>
+    <a href="#" class="fa fa-linkedin"></a>
+    <a href="#" class="fa fa-google"></a>
+    <a href="#" class="fa fa-facebook"></a>
+    <a href="#" class="fa fa-instagram"></a>
+    <a href="#" class="fa fa-twitter"></a>
+    <a href="#" class="fa fa-pinterest"></a>
+    <br>
+    <p>Dionysus @2023</p>
+  </div>
+</div>
+ <!--end of divBottom-->
+<script>
+window.onload = function() {//start of onload function *********************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+  tableName = "Winery";
+  var countTableVals = 0;
+  
+var allWineries;
+
+  getAllTable(tableName)
+  .then(AllTableValues => {
+      if (AllTableValues && AllTableValues.length > 0 && 'Winery_ID' in AllTableValues[0]) {
+        //meaning that we have fetched the data
+        
+        
+        allWineries = AllTableValues;
+        console.log("allWineries has been assigned",allWineries);
+
+          startAllLoading();
+
+          // Assign the fetched data to tableValuesSecond
+         // createTable(); // Call createTable function here to populate the table with fetched data
+      } else {
+          console.log('Data not in expected format');
+      }
+  })
+  .catch(error => {
+      console.error(error);
+  });
+
+
+
+
+
+
+
+
+function startAllLoading() {
+
+ //........................................................................................................
+//                     start of start all loading function                                           
+//........................................................................................................
+
+
+
+
+  //............................................................
+  //FILTERING ACCORDING TO THE VALUES CHANGED IN THE DROP DOWN
+  //............................................................
+
+  //first we have a json object that has all winery values
+  const allWineryDataDummyValues = [
+    {
+      "Winery_ID": "1",
+      "Name": "Jim Harris Wines",
+      "Address": "Address 1",
+      "City": "City 1",
+      "Province": "Eastern Cape",
+      "Verification": true,
+      "Description": "Description 1",
+      "Image": "https://images.unsplash.com/photo-1682687221213-56e250b36fdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+    },
+    {
+      "Winery_ID": "2",
+      "Name": "Stellenbosch Vineyards",
+      "Address": "Address 2",
+      "City": "City 2",
+      "Province": "Gauteng",
+      "Verification": false,
+      "Description": "Description 2",
+      "Image": "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+    },
+    {
+      "Winery_ID": "3",
+      "Name": "Winery 3",
+      "Address": "Address 3",
+      "City": "City 3",
+      "Province": "Western Cape",
+      "Verification": true,
+      "Description": "Description 3",
+      "Image": "https://images.unsplash.com/photo-1464638681273-0962e9b53566?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+    },
+    {
+      "Winery_ID": "4",
+      "Name": "Winery 4",
+      "Address": "Address 4",
+      "City": "City 4",
+      "Province": "KwaZulu-Natal",
+      "Verification": true,
+      "Description": "Description 4",
+      "Image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+    },
+    {
+      "Winery_ID": "5",
+      "Name": "Winery 5",
+      "Address": "Address 5",
+      "City": "City 5",
+      "Province": "Northern Cape",
+      "Verification": false,
+      "Description": "Description 5",
+      "Image": "https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80"
+    },
+    {
+      "Winery_ID": "6",
+      "Name": "Winery 6",
+      "Address": "Address 6",
+      "City": "City 6",
+      "Province": "Mpumalanga",
+      "Verification": true,
+      "Description": "Description 6",
+      "Image": "https://images.unsplash.com/photo-1602170284347-f9c28856f149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1031&q=80"
+    },
+    {
+      "Winery_ID": "7",
+      "Name": "Winery 7",
+      "Address": "Address 7",
+      "City": "City 7",
+      "Province": "Limpopo",
+      "Verification": false,
+      "Description": "Description 7",
+      "Image": "https://images.unsplash.com/photo-1515779122185-2390ccdf060b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+    },
+    {
+      "Winery_ID": "8",
+      "Name": "Winery 8",
+      "Address": "Address 8",
+      "City": "City 8",
+      "Province": "North West",
+      "Verification": true,
+      "Description": "Description 8",
+      "Image": "https://images.unsplash.com/photo-1542159919831-40fb0656b45a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHN1bnNldHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+      "Winery_ID": "9",
+      "Name": "Winery 9",
+      "Address": "Address 9",
+      "City": "City 9",
+      "Province": "Free State",
+      "Verification": true,
+      "Description": "Description 9",
+      "Image": "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fHN1bnNldHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+      "Winery_ID": "10",
+      "Name": "Winery 10",
+      "Address": "Address 10",
+      "City": "City 10",
+      "Province": "Eastern Cape",
+      "Verification": false,
+      "Description": "Description 10",
+      "Image": "https://images.unsplash.com/photo-1682687220566-5599dbbebf11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxzZWFyY2h8NDJ8fHN1bnNldHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    }
+    // Add more wineries here...
+  ]//end of allWineriesDummyValues variable
+  // allWineries = allWineryDataDummyValues;
+
+  function loadAllDataOnLoad() {
+
+    var container = document.getElementById('wineriesContainer');
+
+
+
+allWineries.forEach(function(winery) {
+var wineryDiv = document.createElement('div');
+wineryDiv.className = 'winery';
+
+var nameElement = document.createElement('p');
+nameElement.className = 'winery-name';
+nameElement.textContent = winery.Name;
+wineryDiv.appendChild(nameElement);
+
+var imageElement = document.createElement('img');
+imageElement.className = 'winery-image';
+imageElement.src = winery.Image;
+wineryDiv.appendChild(imageElement);
+
+var addressElement = document.createElement('p');
+addressElement.textContent = 'Address: ' + winery.Address;
+wineryDiv.appendChild(addressElement);
+
+var cityElement = document.createElement('p');
+cityElement.textContent = 'City: ' + winery.City;
+wineryDiv.appendChild(cityElement);
+
+var provinceElement = document.createElement('p');
+provinceElement.textContent = 'Province: ' + winery.Province;
+wineryDiv.appendChild(provinceElement);
+
+container.appendChild(wineryDiv);
+});
+
+    
+  }
+
+  loadAllDataOnLoad();
+
+  var provinceDropdown = document.getElementById("dropDownProvince");
+      provinceDropdown.addEventListener("change", updateCities);
+
+      function updateCities() {
+        var cityDropdown = document.getElementById("dropDownCity");
+        var province = provinceDropdown.value;
+
+
+        wineryList.innerHTML = "";
+
+
+        if (province === "") {
+          return;
+        }
+        else //otherwise you have to load all the values in the city
+        {
+
+          
+          selectedProvince = province;
+          //winery has name , addresss, city , province,zip code,country
+
+          var selectWineryValues = [];
+          //now for every winery meeting our criteria, add it to the selectWineryValues var
+          for (var i = 0; i < allWineries.length; i++) {
+        var winery = allWineries[i];
+        if (winery.Province === selectedProvince) {
+          selectWineryValues.push(winery)
+          var wineryInfo = document.createElement("p");
+       //   wineryInfo.textContent = "Winery ID: " + winery.Winery_ID + ", Name: " + winery.Name + ", Address: " + winery.Address + ", City: " + winery.City + ", Province: " + winery.Province;
+          wineryList.appendChild(wineryInfo);
+            }
+          }
+
+          var container = document.getElementById('wineriesContainer');
+          //first - before anything else - clear all the content in this div
+          container.innerHTML='';
+
+
+                  selectWineryValues.forEach(function(winery) {
+              var wineryDiv = document.createElement('div');
+              wineryDiv.className = 'winery';
+
+              var nameElement = document.createElement('p');
+              nameElement.className = 'winery-name';
+              nameElement.textContent = winery.Name;
+              wineryDiv.appendChild(nameElement);
+
+              var imageElement = document.createElement('img');
+              imageElement.className = 'winery-image';
+              imageElement.src = winery.Image;
+              wineryDiv.appendChild(imageElement);
+
+              var addressElement = document.createElement('p');
+              addressElement.textContent = 'Address: ' + winery.Address;
+              wineryDiv.appendChild(addressElement);
+
+              var cityElement = document.createElement('p');
+              cityElement.textContent = 'City: ' + winery.City;
+              wineryDiv.appendChild(cityElement);
+
+              var provinceElement = document.createElement('p');
+              provinceElement.textContent = 'Province: ' + winery.Province;
+              wineryDiv.appendChild(provinceElement);
+
+              container.appendChild(wineryDiv);
+            });
+                }
+      }//end of updateCities funciton
+
+
+
+
+
+ //........................................................................................................
+//                           end of start all loading function                                           
+//........................................................................................................
+
+
+}
+
+
+
+
+
+
+
+
+
+}//end of onload funciton *************************************************
+</script>
+
+
+<!-- adding link to backend/ajax file-->
+<script type="text/javascript" src="backend/scripts/ajax.js"></script>
+<!-- adding link to backend/ajax file-->
+
+
+</div><!--end of the main body div-->
+</body>
+
+
+
+
+
+</html>
